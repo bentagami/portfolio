@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Contact — Your Name" description="Get in touch">
+
+  <div class="contact">
+
+    <div class="left">
+      <h1>Let's<br /><em>talk.</em></h1>
+      <p>Available for freelance projects, collaborations, and general enquiries. Response within 48 hours.</p>
+    </div>
+
+    <div class="right">
+
+      <div class="contact-links">
+        <a href="mailto:hello@yourname.com" class="link-row">
+          <span class="link-label">Email</span>
+          <span class="link-value">hello@yourname.com ↗</span>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="link-row">
+          <span class="link-label">Instagram</span>
+          <span class="link-value">@yourhandle ↗</span>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="link-row">
+          <span class="link-label">LinkedIn</span>
+          <span class="link-value">Your Name ↗</span>
+        </a>
+      </div>
+
+      <div class="availability">
+        <span class="dot"></span>
+        <span>Available for new projects — {new Date().getFullYear()}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    padding: clamp(3rem, 8vw, 6rem) 0;
+    min-height: 60vh;
+    align-items: center;
+  }
+
+  @media (max-width: 680px) {
+    .contact { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  h1 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em { font-style: italic; color: var(--accent); }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 36ch;
+  }
+
+  /* Links */
+  .contact-links {
+    border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    margin-bottom: 2.5rem;
+  }
+
+  .link-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    transition: padding-left 0.25s ease;
+  }
+
+  .link-row:hover { padding-left: 0.5rem; }
+  .link-row:hover .link-value { color: var(--accent); }
+
+  .link-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .link-value {
+    font-size: 0.95rem;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  /* Availability */
+  .availability {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4caf7d;
+    box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.4);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(76, 175, 125, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 125, 0); }
+  }
+</style>

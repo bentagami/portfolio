@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import about from '../data/about.json';
+---
+
+<Base title="About — Your Name" description="About me">
+
+  <div class="about">
+
+    <aside class="aside">
+      <div class="portrait-wrap">
+        <div class="portrait-placeholder">
+          <span>Photo</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="bio">
+
+      <h1>About</h1>
+
+      <p class="intro">
+        I'm a designer and creative director based in San Francisco. I work with brands, studios, and founders on identity, digital, and print — with a focus on ideas that are both rigorous and alive.
+      </p>
+
+      <p>
+        Currently available for select freelance projects. Previously at Studio Name, Agency Name, and Company Name.
+      </p>
+
+      <div class="sections">
+
+        <section>
+          <h2>Services</h2>
+          <ul>
+            <li>Brand Identity & Strategy</li>
+            <li>Art Direction</li>
+            <li>Web & Digital Design</li>
+            <li>Packaging & Print</li>
+            <li>Creative Consulting</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Clients</h2>
+          <ul>
+            <li>Client Name</li>
+            <li>Client Name</li>
+            <li>Client Name</li>
+            <li>Client Name</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Connect</h2>
+          <ul>
+            <li><a href="mailto:hello@yourname.com">hello@yourname.com</a></li>
+            <li><a href="https://instagram.com" target="_blank">Instagram ↗</a></li>
+            <li><a href="https://linkedin.com" target="_blank">LinkedIn ↗</a></li>
+          </ul>
+        </section>
+
+      </div>
+
+    </div>
+  </div>
+
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 5rem;
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+    align-items: start;
+  }
+
+  @media (max-width: 720px) {
+    .about { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  /* Portrait */
+  .portrait-wrap { position: sticky; top: 6rem; }
+
+  .portrait-placeholder {
+    aspect-ratio: 3/4;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Bio */
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .intro {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+    max-width: 52ch;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 52ch;
+    margin-bottom: 1rem;
+  }
+
+  .sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  section h2 {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  section ul { list-style: none; }
+
+  section ul li {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--ink);
+  }
+
+  section ul a {
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  section ul a:hover { color: var(--accent); border-color: var(--accent); }
+</style>

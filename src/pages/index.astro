@@ -1,17 +1,199 @@
 ---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 
+const allWork = await getCollection('work');
+const work = allWork.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="Work — Your Name" description="Portfolio of selected work">
+
+  <section class="hero">
+    <h1>Selected<br /><em>Work</em></h1>
+    <p class="hero-sub">Design & creative direction — based in San Francisco</p>
+  </section>
+
+  <section class="grid">
+    {work.map((project, i) => (
+      <a href={`/work/${project.slug}`} class="card" style={`--i:${i}`}>
+        <div class="card-image">
+          {project.data.image
+            ? <img src={project.data.image} alt={project.data.title} loading="lazy" />
+            : <div class="card-placeholder" />
+          }
+          {project.data.featured && <span class="badge">Featured</span>}
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-date">{new Date(project.data.date).getFullYear()}</span>
+            <ul class="card-tags">
+              {project.data.tags.slice(0, 2).map(tag => <li>{tag}</li>)}
+            </ul>
+          </div>
+          <h2 class="card-title">{project.data.title}</h2>
+          <p class="card-desc">{project.data.description}</p>
+        </div>
+      </a>
+    ))}
+  </section>
+
+</Base>
+
+<style>
+  /* ── HERO ── */
+  .hero {
+    padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    max-width: 20ch;
+    line-height: 1.6;
+    align-self: flex-end;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeUp 0.5s ease both;
+    animation-delay: calc(var(--i) * 80ms);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--ink) 12%, transparent);
+    z-index: 1;
+  }
+
+  .card-image {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--ink) 5%, transparent);
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .card:hover .card-image img { transform: scale(1.04); }
+
+  .card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--ink) 3%, transparent) 0px,
+      color-mix(in srgb, var(--ink) 3%, transparent) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  }
+
+  .badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.3em 0.7em;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-date {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .card-tags {
+    list-style: none;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .card-tags li {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid currentColor;
+    padding: 0.2em 0.5em;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
