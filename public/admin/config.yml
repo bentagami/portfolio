@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: bentagami/portfolio   # ← replace with your GitHub username/repo
+  repo: bentagami/portfolio
   branch: main
 
 # Where uploaded media files go
