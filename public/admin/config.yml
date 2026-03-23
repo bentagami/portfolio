@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-username/your-repo   # ← replace with your GitHub username/repo
+  repo: bentagami/portfolio   # ← replace with your GitHub username/repo
   branch: main
 
 # Where uploaded media files go
@@ -8,7 +8,7 @@ media_folder: "public/images/work"
 public_folder: "/images/work"
 
 # Show a live preview when editing
-site_url: https://yourname.com    # ← replace with your domain
+site_url: https://www.bentagami.com   # ← replace with your domain
 
 collections:
 
