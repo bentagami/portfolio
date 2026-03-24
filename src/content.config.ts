@@ -56,4 +56,3 @@ const contact = defineCollection({
 });
 
 export const collections = { projects, homepage, about, contact };
-export const collections = { projects, homepage };
