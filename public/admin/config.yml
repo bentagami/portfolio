@@ -1,25 +1,54 @@
 backend:
   name: github
-  repo: bentagami/portfolio # Replace with your actual repo
+  repo: bentagami/portfolio
   branch: main
 
+# Asset Management
 media_folder: "public/images"
 public_folder: "/images"
 
 collections:
+  # SECTION 1: EDITABLE HOMEPAGE DATA
+  - name: "settings"
+    label: "Site Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "homepage"
+        label: "Homepage Content"
+        file: "src/content/homepage/index.md"
+        fields:
+          - { label: "Mission ID", name: "mission_id", widget: "string", default: "MISSION: BT-001" }
+          - { label: "Main Headline", name: "headline", widget: "string", default: "HI, I'M BEN." }
+          - { label: "Highlighted Word", name: "highlight", widget: "string", default: "MAKE", hint: "The word with the yellow marker effect" }
+          - { label: "Sub-Headline", name: "subheadline", widget: "string", default: "Engineer — Builder — Prototyper" }
+          - { label: "Bio/Tagline", name: "tagline", widget: "text" }
+          - { label: "Sticky Note Text", name: "sticky_note", widget: "text" }
+          - label: "Spec Sheet"
+            name: "specs"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Value", name: "value", widget: "string" }
+
+  # SECTION 2: EDITABLE PROJECT LIST
   - name: "projects"
-    label: "Projects"
-    folder: "src/content/projects" # Matches the path in File 4
+    label: "Selected Work"
+    label_singular: "Project"
+    folder: "src/content/projects"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{title}}"
+    editor:
+      preview: false
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Project ID", name: "id", widget: "string", hint: "e.g., #BT-HW-001" }
-      - { label: "Year", name: "year", widget: "number" }
-      - { label: "Icon (Emoji)", name: "icon", widget: "string", hint: "e.g., ⚙️ or 🌐" }
-      - { label: "Handwritten Note", name: "handtag", widget: "string", hint: "e.g., v2.1 or Shipped!" }
-      - { label: "Badge", name: "badge", widget: "string", required: false, hint: "e.g., Featured" }
-      - { label: "Featured (Orange Border)", name: "featured", widget: "boolean", default: false }
-      - { label: "Tags", name: "tags", widget: "list", hint: "e.g., Hardware, Firmware" }
-      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Project Title", name: "title", widget: "string" }
+      - { label: "Short Description", name: "description", widget: "text" }
+      - { label: "Year", name: "year", widget: "number", default: 2026 }
+      - { label: "Project ID", name: "id", widget: "string", hint: "e.g. #BT-SW-001" }
+      - { label: "Icon (Emoji)", name: "icon", widget: "string", hint: "e.g. ⚙️ or 🚀" }
+      - { label: "Sticky Note Text", name: "handtag", widget: "string", required: false }
+      - { label: "Badge Text", name: "badge", widget: "string", required: false, hint: "e.g. NEW" }
+      - { label: "Featured (Orange Top)", name: "featured", widget: "boolean", default: false }
+      - { label: "Tech Stack Tags", name: "tags", widget: "list" }
       - { label: "Body Content", name: "body", widget: "markdown" }
