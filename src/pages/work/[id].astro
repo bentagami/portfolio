@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+// 1. Tell Astro which "work" URLs to create based on the "projects" data
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  
+  return allProjects.map(project => ({
+    // 'id' here must match the [id].astro filename
+    params: { id: project.id }, 
+    props: { project },
+  }));
+}
+
+// 2. Grab the specific project and its content
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+// 3. Destructure based on your specific config schema
+const { 
+  title, 
+  year, 
+  icon, 
+  tags, 
+  description, 
+  badge, 
+  handtag 
+} = project.data;
+---
+
+<Base title={`${title} — Portfolio`}>
+  <article class="project-detail">
+    <header class="project-header">
+      <div class="meta-line">
+        <span class="id-tag">REF_{project.id.toUpperCase()}</span>
+        <span class="year-tag">{year}</span>
+        {badge && <span class="badge">{badge}</span>}
+      </div>
+      
+      <h1>{icon} {title}</h1>
+      {handtag && <p class="handtag">{handtag}</p>}
+      <p class="description">{description}</p>
+      
+      <div class="tags">
+        {tags.map(tag => <span class="tag">#{tag}</span>)}
+      </div>
+    </header>
+
+    <hr class="divider" />
+
+    <div class="prose-content">
+      <Content />
+    </div>
+    
+    <footer class="project-footer">
+      <a href="/" class="back-link">← RETURN TO INDEX</a>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  /* Your existing CSS styles go here */
+  .project-detail { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
+  .meta-line { font-family: monospace; font-size: 0.8rem; margin-bottom: 1rem; color: #666; }
+  .id-tag { background: #eee; padding: 2px 6px; margin-right: 10px; }
+  .prose-content { line-height: 1.8; font-size: 1.1rem; margin-top: 3rem; }
+  .divider { border: 0; border-top: 1px solid #ddd; margin: 3rem 0; }
+  .back-link { font-family: monospace; text-decoration: none; color: #1B3D6E; font-weight: bold; }
+</style>
