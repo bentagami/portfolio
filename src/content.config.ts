@@ -1,8 +1,8 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/content/loaders'; // Standard for Astro 6
+// Try this direct import which is often more stable in newer environments
+import { glob } from 'astro/loaders'; 
 
 const projects = defineCollection({
-  // Point the loader specifically to your projects folder
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: z.object({
     title: z.string().default("Untitled Project"),
@@ -18,7 +18,6 @@ const projects = defineCollection({
 });
 
 const homepage = defineCollection({
-  // Point the loader specifically to your homepage folder
   loader: glob({ pattern: "**/*.md", base: "./src/content/homepage" }),
   schema: z.object({
     mission_id: z.string().optional(),
