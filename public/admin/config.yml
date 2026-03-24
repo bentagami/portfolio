@@ -1,46 +1,25 @@
 backend:
   name: github
-  repo: bentagami/portfolio
+  repo: your-username/your-repo-name # Replace with your actual repo
   branch: main
 
-media_folder: "public/images/work"
-public_folder: "/images/work"
-
-site_url: https://bentagami.com
-
-show_preview_links: true
+media_folder: "public/images"
+public_folder: "/images"
 
 collections:
-
-  - name: "work"
-    label: "Work"
-    label_singular: "Project"
-    folder: "src/content/work"
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects" # Matches the path in File 4
     create: true
-    delete: true
     slug: "{{slug}}"
-    preview_path: "work/{{slug}}"
     fields:
-      - { label: "Title",       name: "title",       widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Project ID", name: "id", widget: "string", hint: "e.g., #BT-HW-001" }
+      - { label: "Year", name: "year", widget: "number" }
+      - { label: "Icon (Emoji)", name: "icon", widget: "string", hint: "e.g., ⚙️ or 🌐" }
+      - { label: "Handwritten Note", name: "handtag", widget: "string", hint: "e.g., v2.1 or Shipped!" }
+      - { label: "Badge", name: "badge", widget: "string", required: false, hint: "e.g., Featured" }
+      - { label: "Featured (Orange Border)", name: "featured", widget: "boolean", default: false }
+      - { label: "Tags", name: "tags", widget: "list", hint: "e.g., Hardware, Firmware" }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Date",        name: "date",        widget: "datetime", format: "YYYY-MM-DD", date_only: true }
-      - { label: "Tags",        name: "tags",        widget: "list",    allow_add: true }
-      - { label: "Cover Image", name: "image",       widget: "image",   required: false }
-      - { label: "Project URL", name: "link",        widget: "string",  required: false }
-      - { label: "Featured",    name: "featured",    widget: "boolean", default: false }
-      - { label: "Body",        name: "body",        widget: "markdown" }
-
-  - name: "pages"
-    label: "Pages"
-    files:
-      - name: "about"
-        label: "About Page"
-        file: "src/data/about.json"
-        fields:
-          - { label: "Introduction", name: "intro",     widget: "text" }
-          - { label: "Bio",          name: "bio",       widget: "text" }
-          - { label: "Email",        name: "email",     widget: "string" }
-          - { label: "Instagram URL",name: "instagram", widget: "string", required: false }
-          - { label: "LinkedIn URL", name: "linkedin",  widget: "string", required: false }
-          - { label: "Services",     name: "services",  widget: "list",   allow_add: true }
-          - { label: "Clients",      name: "clients",   widget: "list",   allow_add: true }
+      - { label: "Body Content", name: "body", widget: "markdown" }
