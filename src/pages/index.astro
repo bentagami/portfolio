@@ -3,25 +3,38 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-// 1. Fetch Homepage Data from src/content/homepage/index.md
+// 1. Fetch Homepage Data
 const homeEntry = await getEntry('homepage', 'index');
 
-// Safety check: if the file is missing, provide fallback data to prevent a crash
-const home = homeEntry ? homeEntry.data : {
-  headline: "HI, I'M BEN. I MAKE THINGS.",
-  highlight: "MAKE",
-  subheadline: "Engineer — Builder",
-  tagline: "Loading bio...",
-  sticky_note: "Sticky note loading...",
-  specs: []
-};
-
-// 2. Fetch and Sort Projects from src/content/projects/*.md
+// 2. Fetch and Sort Projects
 const allProjects = await getCollection('projects');
 const projects = allProjects.sort((a, b) => b.data.year - a.data.year);
 
-// 3. Logic to handle the headline highlighting
-const parts = home.headline.split(home.highlight);
+// 3. Robust Data Extraction
+// If homeEntry is missing, we use hardcoded defaults so the site never looks "broken"
+const home = homeEntry?.data || {
+  mission_id: "MISSION: BT-001",
+  headline: "HI, I'M BEN. I MAKE THINGS.",
+  highlight: "MAKE",
+  subheadline: "Engineer — Builder — Prototyper",
+  tagline: "I build across the full stack — PCB layouts, firmware, mechanical assemblies, web apps. If it can be made, I'll make it work.",
+  sticky_note: "update copy here ✏️ add photo",
+  specs: [
+    { label: "Discipline", value: "Full-Stack Eng." },
+    { label: "Location", value: "San Francisco" }
+  ]
+};
+
+// 4. Headline Splitting Logic
+const headline = home.headline || "";
+const highlight = home.highlight || "";
+let parts = ["", ""];
+
+if (highlight && headline.includes(highlight)) {
+  parts = headline.split(highlight);
+} else {
+  parts = [headline, ""];
+}
 ---
 
 <Layout>
@@ -37,7 +50,7 @@ const parts = home.headline.split(home.highlight);
           {parts[0]}
           <span class="hl-wrap">
             <div class="hl"></div>
-            <span class="hl-text">{home.highlight}</span>
+            <span class="hl-text">{highlight}</span>
           </span>
           {parts[1]}
         </h1>
@@ -81,18 +94,24 @@ const parts = home.headline.split(home.highlight);
   </div>
 
   <div class="grid">
-    {projects.map((project) => (
-      <ProjectCard 
-        title={project.data.title}
-        year={project.data.year}
-        tags={project.data.tags}
-        description={project.data.description}
-        icon={project.data.icon}
-        id={project.data.id}
-        badge={project.data.badge}
-        handtag={project.data.handtag}
-        featured={project.data.featured}
-      />
-    ))}
+    {projects.length > 0 ? (
+      projects.map((project) => (
+        <ProjectCard 
+          title={project.data.title}
+          year={project.data.year}
+          tags={project.data.tags}
+          description={project.data.description}
+          icon={project.data.icon}
+          id={project.data.id}
+          badge={project.data.badge}
+          handtag={project.data.handtag}
+          featured={project.data.featured}
+        />
+      ))
+    ) : (
+      <p style="grid-column: 1/-1; text-align: center; font-family: 'Share Tech Mono'; padding: 2rem; opacity: 0.5;">
+        NO PROJECTS FOUND IN SRC/CONTENT/PROJECTS/
+      </p>
+    )}
   </div>
 </Layout>
