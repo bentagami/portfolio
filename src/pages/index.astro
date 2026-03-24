@@ -1,40 +1,62 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
-// This is the modern, safe way to fetch your projects
-const projects = await getCollection('projects'); 
+// 1. Fetch Homepage Data from src/content/homepage/index.md
+const homeEntry = await getEntry('homepage', 'index');
+
+// Safety check: if the file is missing, provide fallback data to prevent a crash
+const home = homeEntry ? homeEntry.data : {
+  headline: "HI, I'M BEN. I MAKE THINGS.",
+  highlight: "MAKE",
+  subheadline: "Engineer — Builder",
+  tagline: "Loading bio...",
+  sticky_note: "Sticky note loading...",
+  specs: []
+};
+
+// 2. Fetch and Sort Projects from src/content/projects/*.md
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => b.data.year - a.data.year);
+
+// 3. Logic to handle the headline highlighting
+const parts = home.headline.split(home.highlight);
 ---
 
 <Layout>
   <section class="hero">
     <div class="sticky">
       <div class="tape"></div>
-      update<br>copy here ✏️<br>& add photo
+      {home.sticky_note}
     </div>
 
     <div class="hero-grid">
       <div class="hero-text">
         <h1>
-          HI, I'M BEN.<br>
-          I <span class="hl-wrap"><div class="hl"></div><span class="hl-text">MAKE</span></span><br>
-          THINGS.
+          {parts[0]}
+          <span class="hl-wrap">
+            <div class="hl"></div>
+            <span class="hl-text">{home.highlight}</span>
+          </span>
+          {parts[1]}
         </h1>
 
         <svg class="name-line" viewBox="0 0 280 6" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 3 Q20 1 40 4 Q70 6 100 2 Q140 0 180 3 Q210 5 250 2 Q265 1 280 3" fill="none" stroke="#1B3D6E" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
 
-        <p class="hero-sub">Engineer — Builder — Prototyper</p>
+        <p class="hero-sub">{home.subheadline}</p>
 
-        <p class="tagline">I build across the full stack — PCB layouts, firmware, mechanical assemblies, web apps. If it can be made, I'll make it work.</p>
+        <p class="tagline">{home.tagline}</p>
 
         <div class="specs">
-          <div class="spec-row"><span class="spec-label">Discipline</span><span class="spec-val">Full-Stack Eng.</span></div>
-          <div class="spec-row"><span class="spec-label">Speciality</span><span class="spec-val">HW + SW Systems</span></div>
-          <div class="spec-row"><span class="spec-label">Location</span><span class="spec-val">San Francisco</span></div>
-          <div class="spec-row"><span class="spec-label">Background</span><span class="spec-val">Maker / Builder</span></div>
+          {home.specs && home.specs.map((spec) => (
+            <div class="spec-row">
+              <span class="spec-label">{spec.label}</span>
+              <span class="spec-val">{spec.value}</span>
+            </div>
+          ))}
         </div>
       </div>
 
