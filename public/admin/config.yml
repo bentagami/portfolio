@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-username/your-repo-name # Replace with your actual repo
+  repo: bentagami/portfolio # Replace with your actual repo
   branch: main
 
 media_folder: "public/images"
