@@ -15,5 +15,3 @@ specs:
   - label: "Background"
     value: "Maker / Builder"
 ---
-
-This content below the dashes isn't used on the homepage, but you can keep notes here!
