@@ -3,27 +3,105 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-// 1. Fetch the data
-// 'homepage' is the collection, 'index' is the filename (index.md)
+// 1. Fetch the Homepage data (the ID is the filename 'index')
 const homeEntry = await getEntry('homepage', 'index');
-const projectCollection = await getCollection('projects');
 
-// 2. Fallback logic so the site doesn't crash if the loader fails
+// 2. Fetch and Sort Projects
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => b.data.year - a.data.year);
+
+// 3. Extract Data with defaults if the file is missing
 const home = homeEntry?.data || {
-  headline: "DATA LINK ERROR",
-  highlight: "ERROR",
-  subheadline: `Astro 6 found ${projectCollection.length} projects.`,
-  tagline: "The homepage loader is pointing to the wrong place.",
-  sticky_note: "Check Loader Base Path",
+  mission_id: "MISSION: BT-001",
+  headline: "HI, I'M BEN. I MAKE THINGS.",
+  highlight: "MAKE",
+  subheadline: "Engineer — Builder — Prototyper",
+  tagline: "I build across the full stack.",
+  sticky_note: "Content not found in src/content/homepage/index.md",
   specs: []
 };
 
-const projects = projectCollection.sort((a, b) => b.data.year - a.data.year);
+// 4. Headline Logic
 const headline = home.headline || "";
 const highlight = home.highlight || "";
-const parts = headline.includes(highlight) ? headline.split(highlight) : [headline, ""];
+const parts = headline.includes(highlight) 
+  ? headline.split(highlight) 
+  : [headline, ""];
 ---
 
 <Layout>
-  <h1>{parts[0]} <span class="hl">{highlight}</span> {parts[1]}</h1>
+  <section class="hero">
+    <div class="sticky">
+      <div class="tape"></div>
+      {home.sticky_note}
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="mission-id">{home.mission_id}</div>
+        <h1>
+          {parts[0]}
+          <span class="hl-wrap">
+            <div class="hl"></div>
+            <span class="hl-text">{highlight}</span>
+          </span>
+          {parts[1]}
+        </h1>
+
+        <svg class="name-line" viewBox="0 0 280 6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 3 Q20 1 40 4 Q70 6 100 2 Q140 0 180 3 Q210 5 250 2 Q265 1 280 3" fill="none" stroke="#1B3D6E" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+
+        <p class="hero-sub">{home.subheadline}</p>
+        <p class="tagline">{home.tagline}</p>
+
+        <div class="specs">
+          {home.specs && home.specs.map((spec) => (
+            <div class="spec-row">
+              <span class="spec-label">{spec.label}</span>
+              <span class="spec-val">{spec.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="photo-col">
+        <div class="photo-tape"></div>
+        <div class="photo-slot">
+          <div class="photo-placeholder">
+            <span class="icon">🧑‍💻</span>
+          </div>
+        </div>
+        <div class="photo-note">← that's me</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-header">
+    <div class="section-header-inner">
+      <span class="section-num">01</span>
+      <span class="section-title">Selected Work</span>
+      <span class="section-count">{projects.length} PROJECTS LOGGED</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    {projects.length > 0 ? (
+      projects.map((project) => (
+        <ProjectCard 
+          title={project.data.title}
+          year={project.data.year}
+          tags={project.data.tags}
+          description={project.data.description}
+          icon={project.data.icon}
+          id={project.data.id}
+          badge={project.data.badge}
+          handtag={project.data.handtag}
+          featured={project.data.featured}
+        />
+      ))
+    ) : (
+      <div class="no-projects">No projects found in src/content/projects/</div>
+    )}
+  </div>
 </Layout>
