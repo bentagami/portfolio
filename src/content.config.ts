@@ -1,9 +1,7 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/content/loaders'; // The new Astro 5 loader
 
-// 1. Projects Collection
 const projects = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: "./src/content/projects" }),
+  type: 'content',
   schema: z.object({
     title: z.string().default("Untitled Project"),
     id: z.string().default("ID-000"),
@@ -17,9 +15,8 @@ const projects = defineCollection({
   }),
 });
 
-// 2. Homepage Collection
 const homepage = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: "./src/content/homepage" }),
+  type: 'content',
   schema: z.object({
     mission_id: z.string().optional(),
     headline: z.string().optional(),
