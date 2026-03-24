@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
 
-// Grabs all markdown files from your projects folder
-const projects = await Astro.glob('../content/projects/*.md'); 
+// This is the modern, safe way to fetch your projects
+const projects = await getCollection('projects'); 
 ---
 
 <Layout>
@@ -60,15 +61,15 @@ const projects = await Astro.glob('../content/projects/*.md');
   <div class="grid">
     {projects.map((project) => (
       <ProjectCard 
-        title={project.frontmatter.title}
-        year={project.frontmatter.year}
-        tags={project.frontmatter.tags}
-        description={project.frontmatter.description}
-        icon={project.frontmatter.icon}
-        id={project.frontmatter.id}
-        badge={project.frontmatter.badge}
-        handtag={project.frontmatter.handtag}
-        featured={project.frontmatter.featured}
+        title={project.data.title}
+        year={project.data.year}
+        tags={project.data.tags}
+        description={project.data.description}
+        icon={project.data.icon}
+        id={project.data.id}
+        badge={project.data.badge}
+        handtag={project.data.handtag}
+        featured={project.data.featured}
       />
     ))}
   </div>
