@@ -3,79 +3,27 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-// 🔍 METHOD 1: Standard Collection Fetch
-const homeCollection = await getCollection('homepage');
+// 1. Fetch the data
+// 'homepage' is the collection, 'index' is the filename (index.md)
+const homeEntry = await getEntry('homepage', 'index');
 const projectCollection = await getCollection('projects');
 
-// 🔍 METHOD 2: Direct Entry Fetch
-const directHome = await getEntry('homepage', 'index');
-
-// 🔍 METHOD 3: Global File Search (The "Old School" way)
-// This checks if the files even exist on the disk, bypassing the Content Layer
-const allFiles = await import.meta.glob('../content/**/*.md');
-const filePaths = Object.keys(allFiles);
-
-// --- DIAGNOSTIC LOGIC ---
-const foundHome = homeCollection.length > 0;
-const foundProjects = projectCollection.length > 0;
-
-// Determine what data to show
-const home = homeCollection[0]?.data || directHome?.data || {
-  headline: "DIAGNOSTIC: NO DATA FOUND",
-  highlight: "DIAGNOSTIC",
-  subheadline: `Results: Home Coll (${homeCollection.length}) | Proj Coll (${projectCollection.length}) | Raw Files (${filePaths.length})`,
-  tagline: `Raw paths detected: ${filePaths.slice(0, 3).join(', ') || 'NONE'}`,
-  sticky_note: "Check Build Logs",
+// 2. Fallback logic so the site doesn't crash if the loader fails
+const home = homeEntry?.data || {
+  headline: "DATA LINK ERROR",
+  highlight: "ERROR",
+  subheadline: `Astro 6 found ${projectCollection.length} projects.`,
+  tagline: "The homepage loader is pointing to the wrong place.",
+  sticky_note: "Check Loader Base Path",
   specs: []
 };
 
 const projects = projectCollection.sort((a, b) => b.data.year - a.data.year);
-
 const headline = home.headline || "";
 const highlight = home.highlight || "";
 const parts = headline.includes(highlight) ? headline.split(highlight) : [headline, ""];
 ---
 
 <Layout>
-  <section class="hero" style="border: 2px dashed #ff4444; padding: 1rem;">
-    <div style="background: #000; color: #0f0; padding: 10px; font-family: monospace; margin-bottom: 2rem; font-size: 12px;">
-      <strong>DEBUG CONSOLE:</strong><br/>
-      - Homepage Collection: {foundHome ? '✅ FOUND' : '❌ EMPTY'}<br/>
-      - Projects Collection: {foundProjects ? '✅ FOUND' : '❌ EMPTY'}<br/>
-      - Total MD Files on Disk: {filePaths.length}<br/>
-      - Expected Path: src/content/homepage/index.md
-    </div>
-
-    <div class="sticky">
-      <div class="tape"></div>
-      {home.sticky_note}
-    </div>
-
-    <div class="hero-grid">
-      <div class="hero-text">
-        <h1>
-          {parts[0]}
-          <span class="hl-wrap">
-            <div class="hl"></div>
-            <span class="hl-text">{highlight}</span>
-          </span>
-          {parts[1]}
-        </h1>
-        <p class="hero-sub">{home.subheadline}</p>
-        <p class="tagline">{home.tagline}</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="grid">
-    {projects.map((project) => (
-      <ProjectCard 
-        title={project.data.title}
-        year={project.data.year}
-        description={project.data.description}
-        icon={project.data.icon}
-        id={project.data.id}
-      />
-    ))}
-  </div>
+  <h1>{parts[0]} <span class="hl">{highlight}</span> {parts[1]}</h1>
 </Layout>
