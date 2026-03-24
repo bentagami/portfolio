@@ -3,29 +3,31 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-// 1. Fetch Homepage Data
+/** * 1. FETCH DATA 
+ * We fetch the 'homepage' collection and the 'index' entry.
+ * This MUST match your folder src/content/homepage/index.md
+ */
 const homeEntry = await getEntry('homepage', 'index');
 
-// 2. Fetch and Sort Projects
+// 2. Fetch all projects from src/content/projects/
 const allProjects = await getCollection('projects');
 const projects = allProjects.sort((a, b) => b.data.year - a.data.year);
 
-// 3. Robust Data Extraction
-// If homeEntry is missing, we use hardcoded defaults so the site never looks "broken"
+/** * 3. DYNAMIC CONTENT MAPPING
+ * If homeEntry exists, we use its data. 
+ * If it is undefined, the site will show "CONNECTION ERROR" 
+ * so you know exactly which file is failing to load.
+ */
 const home = homeEntry?.data || {
-  mission_id: "MISSION: BT-001",
-  headline: "HI, I'M BEN. I MAKE THINGS.",
-  highlight: "MAKE",
-  subheadline: "Engineer — Builder — Prototyper",
-  tagline: "I build across the full stack — PCB layouts, firmware, mechanical assemblies, web apps. If it can be made, I'll make it work.",
-  sticky_note: "update copy here ✏️ add photo",
-  specs: [
-    { label: "Discipline", value: "Full-Stack Eng." },
-    { label: "Location", value: "San Francisco" }
-  ]
+  headline: "CONNECTION ERROR: FILE NOT FOUND",
+  highlight: "ERROR",
+  subheadline: "Check src/content/homepage/index.md",
+  tagline: "Astro cannot find your markdown file. Check your config.js and folder naming.",
+  sticky_note: "Fix path",
+  specs: []
 };
 
-// 4. Headline Splitting Logic
+// 4. Headline Highlighting Logic
 const headline = home.headline || "";
 const highlight = home.highlight || "";
 let parts = ["", ""];
@@ -60,7 +62,6 @@ if (highlight && headline.includes(highlight)) {
         </svg>
 
         <p class="hero-sub">{home.subheadline}</p>
-
         <p class="tagline">{home.tagline}</p>
 
         <div class="specs">
@@ -109,9 +110,18 @@ if (highlight && headline.includes(highlight)) {
         />
       ))
     ) : (
-      <p style="grid-column: 1/-1; text-align: center; font-family: 'Share Tech Mono'; padding: 2rem; opacity: 0.5;">
-        NO PROJECTS FOUND IN SRC/CONTENT/PROJECTS/
-      </p>
+      <div class="no-projects">NO PROJECTS FOUND IN SRC/CONTENT/PROJECTS/</div>
     )}
   </div>
 </Layout>
+
+<style>
+  .no-projects {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem;
+    font-family: 'Share Tech Mono', monospace;
+    opacity: 0.4;
+    border: 1px dashed var(--blue);
+  }
+</style>
