@@ -3,45 +3,49 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-/** * 1. FETCH DATA 
- * We fetch the 'homepage' collection and the 'index' entry.
- * This MUST match your folder src/content/homepage/index.md
- */
-const allHomeEntries = await getCollection('homepage');
-const homeEntry = allHomeEntries[0];
+// 🔍 METHOD 1: Standard Collection Fetch
+const homeCollection = await getCollection('homepage');
+const projectCollection = await getCollection('projects');
 
-// 2. Fetch all projects from src/content/projects/
-const allProjects = await getCollection('projects');
-const projects = allProjects.sort((a, b) => b.data.year - a.data.year);
+// 🔍 METHOD 2: Direct Entry Fetch
+const directHome = await getEntry('homepage', 'index');
 
-/** * 3. DYNAMIC CONTENT MAPPING
- * If homeEntry exists, we use its data. 
- * If it is undefined, the site will show "CONNECTION ERROR" 
- * so you know exactly which file is failing to load.
- */
-const home = homeEntry?.data || {
-  headline: "CONNECTION ERROR: FILE NOT FOUND",
-  highlight: "ERROR",
-  subheadline: "Check src/content/homepage/index.md",
-  tagline: "Astro cannot find your markdown file. Check your config.js and folder naming.",
-  sticky_note: "Fix path",
+// 🔍 METHOD 3: Global File Search (The "Old School" way)
+// This checks if the files even exist on the disk, bypassing the Content Layer
+const allFiles = await import.meta.glob('../content/**/*.md');
+const filePaths = Object.keys(allFiles);
+
+// --- DIAGNOSTIC LOGIC ---
+const foundHome = homeCollection.length > 0;
+const foundProjects = projectCollection.length > 0;
+
+// Determine what data to show
+const home = homeCollection[0]?.data || directHome?.data || {
+  headline: "DIAGNOSTIC: NO DATA FOUND",
+  highlight: "DIAGNOSTIC",
+  subheadline: `Results: Home Coll (${homeCollection.length}) | Proj Coll (${projectCollection.length}) | Raw Files (${filePaths.length})`,
+  tagline: `Raw paths detected: ${filePaths.slice(0, 3).join(', ') || 'NONE'}`,
+  sticky_note: "Check Build Logs",
   specs: []
 };
 
-// 4. Headline Highlighting Logic
+const projects = projectCollection.sort((a, b) => b.data.year - a.data.year);
+
 const headline = home.headline || "";
 const highlight = home.highlight || "";
-let parts = ["", ""];
-
-if (highlight && headline.includes(highlight)) {
-  parts = headline.split(highlight);
-} else {
-  parts = [headline, ""];
-}
+const parts = headline.includes(highlight) ? headline.split(highlight) : [headline, ""];
 ---
 
 <Layout>
-  <section class="hero">
+  <section class="hero" style="border: 2px dashed #ff4444; padding: 1rem;">
+    <div style="background: #000; color: #0f0; padding: 10px; font-family: monospace; margin-bottom: 2rem; font-size: 12px;">
+      <strong>DEBUG CONSOLE:</strong><br/>
+      - Homepage Collection: {foundHome ? '✅ FOUND' : '❌ EMPTY'}<br/>
+      - Projects Collection: {foundProjects ? '✅ FOUND' : '❌ EMPTY'}<br/>
+      - Total MD Files on Disk: {filePaths.length}<br/>
+      - Expected Path: src/content/homepage/index.md
+    </div>
+
     <div class="sticky">
       <div class="tape"></div>
       {home.sticky_note}
@@ -57,72 +61,21 @@ if (highlight && headline.includes(highlight)) {
           </span>
           {parts[1]}
         </h1>
-
-        <svg class="name-line" viewBox="0 0 280 6" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 3 Q20 1 40 4 Q70 6 100 2 Q140 0 180 3 Q210 5 250 2 Q265 1 280 3" fill="none" stroke="#1B3D6E" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-
         <p class="hero-sub">{home.subheadline}</p>
         <p class="tagline">{home.tagline}</p>
-
-        <div class="specs">
-          {home.specs && home.specs.map((spec) => (
-            <div class="spec-row">
-              <span class="spec-label">{spec.label}</span>
-              <span class="spec-val">{spec.value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="photo-col">
-        <div class="photo-tape"></div>
-        <div class="photo-slot">
-          <div class="photo-placeholder">
-            <span class="icon">🧑‍💻</span>
-          </div>
-        </div>
-        <div class="photo-note">← that's me</div>
       </div>
     </div>
   </section>
 
-  <div class="section-header">
-    <div class="section-header-inner">
-      <span class="section-num">01</span>
-      <span class="section-title">Selected Work</span>
-      <span class="section-count">{projects.length} PROJECTS LOGGED</span>
-    </div>
-  </div>
-
   <div class="grid">
-    {projects.length > 0 ? (
-      projects.map((project) => (
-        <ProjectCard 
-          title={project.data.title}
-          year={project.data.year}
-          tags={project.data.tags}
-          description={project.data.description}
-          icon={project.data.icon}
-          id={project.data.id}
-          badge={project.data.badge}
-          handtag={project.data.handtag}
-          featured={project.data.featured}
-        />
-      ))
-    ) : (
-      <div class="no-projects">NO PROJECTS FOUND IN SRC/CONTENT/PROJECTS/</div>
-    )}
+    {projects.map((project) => (
+      <ProjectCard 
+        title={project.data.title}
+        year={project.data.year}
+        description={project.data.description}
+        icon={project.data.icon}
+        id={project.data.id}
+      />
+    ))}
   </div>
 </Layout>
-
-<style>
-  .no-projects {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 4rem;
-    font-family: 'Share Tech Mono', monospace;
-    opacity: 0.4;
-    border: 1px dashed var(--blue);
-  }
-</style>
