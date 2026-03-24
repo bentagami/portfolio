@@ -3,7 +3,7 @@ mission_id: 'MISSION: BT-001'
 headline: HI, I'M BEN. I MAKE THINGS.
 highlight: MAKE
 subheadline: Engineer — Builder — Prototyper
-tagline: I build across the full stack — PCB layouts, firmware, mechanical assemblies, web apps. If it can be made, I'll make it work.
+tagline: I have a background in Materials Science & Mechanical Engineering. I have worked in the Semiconductor and Additive Manufacturing industries. I am currently designing exhibits and teaching engineering skills at Chabot Space & Science Center.
 sticky_note: update copy here ✏️ add photo
 specs:
   - label: Title
