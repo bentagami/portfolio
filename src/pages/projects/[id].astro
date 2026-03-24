@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content'; // 1. Added render here
+
+export async function getStaticPaths() {
+  // 2. Changed 'work' to 'projects' to match your config.ts
+  const projects = await getCollection('projects'); 
+  
+  return projects.map(project => ({
+    params: { slug: project.id }, // 3. Use .id instead of .slug
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+// 4. Astro 6 syntax for rendering content
+const { Content } = await render(project); 
+
+// 5. Destructure your data (Note: ensured 'date' has a fallback to avoid crashes)
+const { title, description, year, tags = [], image, link } = project.data;
+
+// If you want to keep using the 'date' variable for your JS Date below:
+const displayDate = year ? new Date(year, 0, 1) : new Date();
+---
+
+<Base title={`${title} — Ben Tagami`} description={description}>
+  <article class="project">
+    <header class="project-header">
+      <a href="/" class="back">← All Work</a>
+      <div class="project-meta">
+        <ul class="tags">
+          {tags.map(tag => <li>{tag}</li>)}
+        </ul>
+        <span class="date">{displayDate.getFullYear()}</span>
+      </div>
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+      {link && <a href={link} target="_blank" rel="noopener" class="ext-link">View Project ↗</a>}
+    </header>
+
+    {image && (
+      <div class="hero-image">
+        <img src={image} alt={title} />
+      </div>
+    )}
+
+    <div class="content">
+      <Content />
+    </div>
+  </article>
+</Base>
