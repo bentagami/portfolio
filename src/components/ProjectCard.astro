@@ -1,45 +1,51 @@
 ---
-// 1. Ensure 'id' is in the props destructuring
-const { title, year, tags, description, icon, id, badge, handtag, featured } = Astro.props;
+const { title, year, tags = [], description, badge, id, icon, handtag, featured } = Astro.props;
 ---
 
-<a href={`/work/${id}`} class="card-link">
-  <div class={`project-card ${featured ? 'featured' : ''}`}>
-    <div class="card-header">
-      <div class="header-left">
-        <span class="icon">{icon}</span>
-        <span class="year">{year}</span>
-      </div>
+<a href={`/work/${id}`} class="project-card-wrapper">
+  <div class={`card ${featured ? 'featured' : ''}`}>
+    <div class="card-tape"></div>
+    <div class="card-img">
       {badge && <span class="badge">{badge}</span>}
+      <span class="card-img-icon">{icon}</span>
+      {handtag && <span class="card-handtag">{handtag}</span>}
     </div>
-
     <div class="card-body">
-      <h3>{title}</h3>
-      {handtag && <p class="handtag">{handtag}</p>}
-      <p class="description">{description}</p>
-    </div>
-
-    <div class="card-footer">
-      <div class="tags">
-        {tags.map((tag: string) => <span class="tag">#{tag}</span>)}
+      <div class="card-meta">
+        <span class="card-year">{year}</span>
+        {tags.map((tag: string) => <span class="card-tag">{tag}</span>)}
       </div>
-      <span class="arrow">→</span>
+      <h2 class="card-title">{title}</h2>
+      <p class="card-desc">{description}</p>
+      <div class="card-footer">
+        <span class="card-link">OPEN BRIEF →</span>
+        <span class="card-id">{id}</span>
+      </div>
     </div>
   </div>
 </a>
 
 <style>
-  /* 3. Add styling to ensure the link doesn't look like a blue hyperlink */
-  .card-link {
+  /* Ensure the link doesn't look like a standard blue hyperlink */
+  .project-card-wrapper {
     text-decoration: none;
     color: inherit;
     display: block;
     transition: transform 0.2s ease;
   }
 
-  .card-link:hover {
+  /* Add a slight lift effect when hovering over the link */
+  .project-card-wrapper:hover {
     transform: translateY(-4px);
   }
 
-  /* Your existing .project-card styles go here... */
+  /* You can also trigger inner card changes on hover */
+  .project-card-wrapper:hover .card {
+    border-color: #1B3D6E;
+  }
+
+  .project-card-wrapper:hover .card-link {
+    color: #1B3D6E;
+    text-decoration: underline;
+  }
 </style>
