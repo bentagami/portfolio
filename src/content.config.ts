@@ -33,4 +33,27 @@ const homepage = defineCollection({
   }),
 });
 
+const about = defineCollection({
+  loader: glob({ pattern: "index.md", base: "./src/content/about" }),
+  schema: z.object({
+    title: z.string().default("About"),
+    subtitle: z.string().optional(),
+    description: z.string().optional(),
+  }),
+});
+
+const contact = defineCollection({
+  loader: glob({ pattern: "index.md", base: "./src/content/contact" }),
+  schema: z.object({
+    title: z.string().default("Contact"),
+    email: z.string().optional(),
+    socials: z.array(z.object({
+      platform: z.string(),
+      url: z.string(),
+      handle: z.string()
+    })).optional().default([])
+  }),
+});
+
+export const collections = { projects, homepage, about, contact };
 export const collections = { projects, homepage };
