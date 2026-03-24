@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ben Tagami | Portfolio</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <div class="nav-left">
+          <span class="mission-id">MISSION: BT-001</span>
+          <a href="/" class="wordmark">BEN TAGAMI</a>
+        </div>
+        <ul>
+          <li><a href="/">Work</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <slot /> <footer>
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-wordmark">BEN TAGAMI</span>
+          <span class="footer-copy">© 2026 — ALL SYSTEMS GO</span>
+        </div>
+        <div class="footer-links">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
