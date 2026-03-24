@@ -1,0 +1,24 @@
+---
+const { title, year, tags = [], description, badge, id, icon, handtag, featured } = Astro.props;
+---
+
+<div class={`card ${featured ? 'featured' : ''}`}>
+  <div class="card-tape"></div>
+  <div class="card-img">
+    {badge && <span class="badge">{badge}</span>}
+    <span class="card-img-icon">{icon}</span>
+    {handtag && <span class="card-handtag">{handtag}</span>}
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span class="card-year">{year}</span>
+      {tags.map((tag: string) => <span class="card-tag">{tag}</span>)}
+    </div>
+    <h2 class="card-title">{title}</h2>
+    <p class="card-desc">{description}</p>
+    <div class="card-footer">
+      <span class="card-link">OPEN BRIEF →</span>
+      <span class="card-id">{id}</span>
+    </div>
+  </div>
+</div>
