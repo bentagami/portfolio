@@ -4,17 +4,19 @@ import { glob } from 'astro/loaders';
 
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
-  schema: z.object({
-    title: z.string().default("Untitled Project"),
-    id: z.string().default("ID-000"),
-    year: z.coerce.number().default(2026),
-    icon: z.string().optional().default("📁"),
+  // The line below is the fix: we pass ({ image }) to the schema function
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string(),
+    year: z.coerce.number(),
+    id: z.string(),
+    icon: z.string().optional(),
     handtag: z.string().optional(),
     badge: z.string().optional(),
     featured: z.boolean().default(false),
-    tags: z.array(z.string()).default([]),
-    description: z.string().default("No description provided."),
-    coverImage: image().optional(),
+    tags: z.array(z.string()),
+    // Now 'image' is defined and can be used here:
+    coverImage: image().optional(), 
   }),
 });
 
