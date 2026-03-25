@@ -1,5 +1,6 @@
 ---
 title: Astrobee Laboratory
+coverImage: /images/projects/Astrobee.png
 description: Created a mini laboratory for usage aboard the ISS that fit into existing Astrobee robots.
 year: 2021
 id: '1'
