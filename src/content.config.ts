@@ -14,6 +14,7 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
     description: z.string().default("No description provided."),
+    coverImage: image().optional(),
   }),
 });
 
