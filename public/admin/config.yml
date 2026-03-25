@@ -4,8 +4,8 @@ backend:
   branch: main
 
 # Asset Management
-media_folder: "public/images"
-public_folder: "/images"
+media_folder: "src/assets/projects"
+public_folder: "../../assets/projects"
 
 collections:
   # SECTION 1: EDITABLE HOMEPAGE DATA
@@ -43,6 +43,7 @@ collections:
       preview: false
     fields:
       - { label: "Project Title", name: "title", widget: "string" }
+      - { label: "Card Cover Image", name: "coverImage", widget: "image", required: false }
       - { label: "Short Description", name: "description", widget: "text" }
       - { label: "Year", name: "year", widget: "number", default: 2026 }
       - { label: "Project ID", name: "id", widget: "string", hint: "e.g. #BT-SW-001" }
