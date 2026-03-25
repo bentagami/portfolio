@@ -12,4 +12,4 @@ tags:
   - Hardware, Manufacturing
 ---
 
-I designed a "mini laboratory" that fit into NASA's Astrobee. The Astrobee robot is designed to help astronauts aboard the ISS. This project was part of a proposal that would allow students to design experiments that could go onboard an Astrobee robot.
+I designed a "mini laboratory" that fit into NASA's Astrobee. The Astrobee robot is designed to help astronauts aboard the ISS. This project was part of a proposal that would allow students to design experiments that could go onboard an Astrobee robot.![](/images/projects/Astrobee.png)
