@@ -1,6 +1,17 @@
 ---
-import { Image } from 'astro:assets';
-const { title, year, tags = [], description, badge, id, icon, handtag, featured, coverImage } = Astro.props;
+// We removed the Astro Image import because images are now in /public
+const { 
+  title, 
+  year, 
+  tags = [], 
+  description, 
+  badge, 
+  id, 
+  icon, 
+  handtag, 
+  featured, 
+  coverImage 
+} = Astro.props;
 ---
 
 <a href={`/work/${id}`} class="project-card-wrapper">
@@ -9,12 +20,11 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
 
     <div class="card-img-container">
       {coverImage ? (
-        <Image 
+        <img 
           src={coverImage} 
           alt={title} 
-          width={600} 
-          height={400} 
           class="main-photo"
+          loading="lazy"
         />
       ) : (
         <div class="photo-placeholder">
@@ -41,7 +51,7 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
 
       <div class="card-footer">
         <span class="card-link">OPEN_BRIEF →</span>
-        <span class="card-id">{id.substring(0, 8)}</span>
+        <span class="card-id">REF_{id.substring(0, 8).toUpperCase()}</span>
       </div>
     </div>
   </div>
@@ -70,10 +80,9 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
   }
 
   .card.featured {
-    border-top: 4px solid #f97316; /* Orange top for featured */
+    border-top: 4px solid #f97316;
   }
 
-  /* Tape Detail */
   .card-tape {
     position: absolute;
     top: -10px;
@@ -86,7 +95,6 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
     z-index: 10;
   }
 
-  /* Image Handling */
   .card-img-container {
     position: relative;
     width: 100%;
@@ -117,9 +125,9 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
 
   .placeholder-icon { font-size: 3rem; opacity: 0.3; }
 
-  /* Body Padding & Layout */
+  /* Content Spacing */
   .card-body {
-    padding: 1.5rem; /* THE FIX: Consistent internal margins */
+    padding: 1.5rem; 
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -157,14 +165,12 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
     line-height: 1.5;
     color: #475569;
     margin-bottom: 1.5rem;
-    /* Limit description to 3 lines */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  /* Footer */
   .card-footer {
     margin-top: auto;
     padding-top: 1rem;
@@ -187,7 +193,6 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
     color: #cbd5e1;
   }
 
-  /* Absolute Positioned Elements */
   .badge {
     position: absolute;
     top: 1rem;
@@ -205,7 +210,7 @@ const { title, year, tags = [], description, badge, id, icon, handtag, featured,
     position: absolute;
     bottom: 0.5rem;
     left: 0.5rem;
-    background: #fef08a; /* Sticky note yellow */
+    background: #fef08a;
     color: #854d0e;
     padding: 2px 8px;
     font-family: 'Comic Sans MS', cursive;
