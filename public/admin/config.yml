@@ -4,8 +4,8 @@ backend:
   branch: main
 
 # Asset Management
-media_folder: "src/assets/projects"
-public_folder: "../../assets/projects"
+media_folder: "public/images/projects"
+public_folder: "/images/projects"
 
 collections:
   # SECTION 1: EDITABLE HOMEPAGE DATA
