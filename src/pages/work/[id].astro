@@ -4,13 +4,20 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
-  return allProjects.map(project => ({
+  // Sort them so "Next" follows your homepage order (by year)
+  const sorted = allProjects.sort((a, b) => b.data.year - a.data.year);
+  
+  return sorted.map((project, index) => ({
     params: { id: project.id }, 
-    props: { project },
+    props: { 
+      project,
+      // Pass the next project as a prop
+      nextProject: sorted[index + 1] || sorted[0] // Loop back to start if at the end
+    },
   }));
 }
 
-const { project } = Astro.props;
+const { project, nextProject } = Astro.props;
 const { Content } = await render(project);
 const { title, year, icon, tags, description, badge, handtag } = project.data;
 ---
@@ -53,70 +60,100 @@ const { title, year, icon, tags, description, badge, handtag } = project.data;
     </main>
 
     <footer class="brief-footer">
-      <a href="/" class="back-btn">
-        <span class="arrow">←</span> RETURN TO TERMINAL_INDEX
-      </a>
+      <div class="nav-controls">
+        <a href="/" class="nav-btn secondary">
+          <span class="btn-icon">⌂</span> 
+          <span class="btn-text">RETURN_TO_INDEX</span>
+        </a>
+
+        <a href={`/work/${nextProject.id}`} class="nav-btn primary">
+          <div class="next-label">NEXT_LOG_ENTRY →</div>
+          <div class="next-title">{nextProject.data.title}</div>
+        </a>
+      </div>
     </footer>
   </div>
 </Layout>
 
 <style>
-  .brief-wrapper {
-    max-width: 850px;
-    margin: 5rem auto;
-    padding: 0 2rem;
-    font-family: var(--font-sans, sans-serif);
+  /* ... (keep your previous .brief-wrapper and header styles) ... */
+
+  .brief-footer {
+    margin-top: 8rem;
+    padding-top: 4rem;
+    border-top: 1px solid #e2e8f0;
   }
 
-  /* Meta styling */
-  .brief-meta {
-    display: flex;
+  .nav-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    font-family: monospace;
-    font-size: 0.75rem;
-    color: #64748b;
-    margin-bottom: 2rem;
+    align-items: stretch;
+  }
+
+  .nav-btn {
+    text-decoration: none;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* "Back to Home" Button Styles */
+  .nav-btn.secondary {
     align-items: center;
-  }
-  .label { font-weight: bold; margin-right: 0.5rem; color: #1B3D6E; }
-  .status-badge { 
-    background: #1B3D6E; 
-    color: white; 
-    padding: 2px 8px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em;
+    background: #f8fafc;
+    color: #64748b;
+    font-family: monospace;
+    font-size: 0.8rem;
   }
 
-  /* Title styling */
-  .title-block { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
-  .project-icon { font-size: 2.5rem; }
-  h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 0.9; margin: 0; color: #0f172a; }
-
-  .hand-note { 
-    font-family: 'Comic Sans MS', cursive; /* Fallback for handwritten feel */
-    color: #2563eb; 
-    font-size: 1rem;
-    transform: rotate(-1deg);
-    margin-bottom: 1.5rem;
+  /* "Next Project" Button Styles */
+  .nav-btn.primary {
+    background: #ffffff;
+    border-color: #1B3D6E;
+    color: #1B3D6E;
+    text-align: right;
+    position: relative;
+    overflow: hidden;
   }
 
-  .summary-text { font-size: 1.25rem; line-height: 1.6; color: #334155; margin-bottom: 2rem; max-width: 65ch; }
+  .nav-btn.primary::after {
+    content: "";
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: #1B3D6E;
+  }
 
-  .tech-tag { font-family: monospace; font-size: 0.7rem; color: #1B3D6E; border: 1px solid #e2e8f0; padding: 4px 10px; margin-right: 0.5rem; }
+  .next-label {
+    font-family: monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
 
-  /* Blueprint Divider */
-  .divider { display: flex; align-items: center; gap: 1rem; margin: 4rem 0; }
-  .line { flex-grow: 1; height: 1px; background: #cbd5e1; }
-  .divider-text { font-family: monospace; font-size: 0.65rem; color: #94a3b8; letter-spacing: 0.2em; }
+  .next-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
 
-  /* Markdown Body Content Styling */
-  .brief-content { line-height: 1.8; font-size: 1.1rem; color: #1e293b; }
-  .brief-content :global(h2) { font-family: monospace; font-size: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-top: 3rem; }
-  .brief-content :global(p) { margin-bottom: 1.5rem; }
-  .brief-content :global(img) { width: 100%; border-radius: 4px; border: 1px solid #e2e8f0; margin: 2rem 0; }
+  /* Hover Effects */
+  .nav-btn:hover {
+    border-color: #1B3D6E;
+    background: #f1f5f9;
+    transform: translateY(-2px);
+  }
 
-  /* Footer */
-  .brief-footer { margin-top: 6rem; padding-top: 2rem; border-top: 1px dashed #cbd5e1; }
-  .back-btn { font-family: monospace; font-size: 0.85rem; color: #1B3D6E; text-decoration: none; font-weight: bold; }
-  .back-btn:hover { text-decoration: underline; }
+  .nav-btn.primary:hover {
+    background: #1B3D6E;
+    color: white;
+  }
+
+  @media (max-width: 600px) {
+    .nav-controls { grid-template-columns: 1fr; }
+  }
 </style>
