@@ -9,7 +9,7 @@ handtag: ''
 badge: ''
 featured: true
 tags:
-  - Javascript, Python
+  - Mediapipe, Optics, Javascript, 3D Printing
 ---
 
 We happened to already have a MagicPlanet lying around so I thought to use modern computer vision to add more to the experience. ![](/images/projects/IMG_20260424_110959.jpg)
