@@ -1,6 +1,6 @@
 ---
 title: Multi Touch Projected Sphere Surface
-coverImage: ''
+coverImage: /images/projects/IMG_20260503_163050.jpg
 description: I followed this paper https://www.hbenko.com/publications/2008/Benko_Sphere_UIST2008.pdf and recreated the sphere with modern software solutions.
 year: 2026
 id: BT-SW-01
