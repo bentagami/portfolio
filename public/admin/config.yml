@@ -32,6 +32,29 @@ collections:
               - { label: "Label", name: "label", widget: "string" }
               - { label: "Value", name: "value", widget: "string" }
 
+      - name: "about"
+        label: "About Page"
+        file: "src/content/about/index.md"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string", default: "About" }
+          - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+          - { label: "Meta Description", name: "description", widget: "text", required: false }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/content/contact/index.md"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string", default: "Contact" }
+          - { label: "Email", name: "email", widget: "string" }
+          - label: "Social Links"
+            name: "socials"
+            widget: "list"
+            fields:
+              - { label: "Platform", name: "platform", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+              - { label: "Display Handle", name: "handle", widget: "string" }
+
   # SECTION 2: EDITABLE PROJECT LIST
   - name: "projects"
     label: "Selected Work"

@@ -1,5 +1,11 @@
 ---
 import '../styles/global.css';
+import { getEntry } from 'astro:content';
+
+const contactEntry = await getEntry('contact', 'index');
+const socials = contactEntry?.data.socials || [];
+const github = socials.find(s => s.platform.toLowerCase() === 'github');
+const linkedin = socials.find(s => s.platform.toLowerCase() === 'linkedin');
 ---
 
 <!DOCTYPE html>
@@ -30,9 +36,9 @@ import '../styles/global.css';
           <span class="footer-copy">© {new Date().getFullYear()}</span>
         </div>
         <div class="footer-links">
-          <a href="#">GitHub</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">Contact</a>
+          {github && <a href={github.url} target="_blank">GitHub</a>}
+          {linkedin && <a href={linkedin.url} target="_blank">LinkedIn</a>}
+          <a href="/contact">Contact</a>
         </div>
       </div>
     </footer>
