@@ -31,25 +31,15 @@ const parts = headline.includes(highlight)
 
 <Layout>
   <section class="hero">
-    <div class="sticky">
-      <div class="tape"></div>
-      {home.sticky_note}
-    </div>
-
     <div class="hero-grid">
       <div class="hero-text">
         <h1>
           {parts[0]}
           <span class="hl-wrap">
-            <div class="hl"></div>
             <span class="hl-text">{highlight}</span>
           </span>
           {parts[1]}
         </h1>
-
-        <svg class="name-line" viewBox="0 0 280 6" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 3 Q20 1 40 4 Q70 6 100 2 Q140 0 180 3 Q210 5 250 2 Q265 1 280 3" fill="none" stroke="#1B3D6E" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
 
         <p class="hero-sub">{home.subheadline}</p>
         <p class="tagline">{home.tagline}</p>
@@ -65,22 +55,19 @@ const parts = headline.includes(highlight)
       </div>
 
       <div class="photo-col">
-        <div class="photo-tape"></div>
         <div class="photo-slot">
           <div class="photo-placeholder">
             <span class="icon">🧑‍💻</span>
           </div>
         </div>
-        <div class="photo-note">← that's me</div>
       </div>
     </div>
   </section>
 
   <div class="section-header">
     <div class="section-header-inner">
-      <span class="section-num">01</span>
       <span class="section-title">Selected Work</span>
-      <span class="section-count">{projects.length} PROJECTS LOGGED</span>
+      <span class="section-count">{projects.length} projects</span>
     </div>
   </div>
 

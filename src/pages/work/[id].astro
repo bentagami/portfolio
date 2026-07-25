@@ -17,41 +17,28 @@ export async function getStaticPaths() {
 
 const { project, nextProject } = Astro.props;
 const { Content } = await render(project);
-const { title, year, icon, tags, description, badge, handtag } = project.data;
+const { title, year, icon, tags, description, badge } = project.data;
 ---
 
-<Layout title={`${title} | Project Brief`}>
+<Layout title={`${title} | Project`}>
   <div class="brief-wrapper">
     <header class="brief-header">
       <div class="brief-meta">
-        <div class="meta-item">
-          <span class="label">LOG_ID:</span>
-          <span class="value">REF_{project.id.toUpperCase()}</span>
-        </div>
-        <div class="meta-item">
-          <span class="label">YEAR:</span>
-          <span class="value">{year}</span>
-        </div>
+        <span class="value">{year}</span>
         {badge && <span class="status-badge">{badge}</span>}
       </div>
 
       <div class="title-block">
-        <span class="project-icon">{icon}</span>
+        {icon && <span class="project-icon">{icon}</span>}
         <h1>{title}</h1>
       </div>
 
-      {handtag && <p class="hand-note">“{handtag}”</p>}
       <p class="summary-text">{description}</p>
 
       <div class="tag-row">
-        {tags.map(tag => <span class="tech-tag">#{tag}</span>)}
+        {tags.map(tag => <span class="tech-tag">{tag}</span>)}
       </div>
     </header>
-
-    <div class="divider">
-      <div class="line"></div>
-      <span class="divider-text">TECHNICAL_DOCUMENTATION</span>
-    </div>
 
     <main class="brief-content">
       <Content />
@@ -60,12 +47,11 @@ const { title, year, icon, tags, description, badge, handtag } = project.data;
     <footer class="brief-footer">
       <div class="nav-controls">
         <a href="/" class="nav-btn secondary">
-          <span class="btn-icon">⌂</span> 
-          <span class="btn-text">RETURN_TO_INDEX</span>
+          <span class="btn-text">← All projects</span>
         </a>
 
         <a href={`/work/${nextProject.id}`} class="nav-btn primary">
-          <div class="next-label">NEXT_LOG_ENTRY →</div>
+          <div class="next-label">Next project</div>
           <div class="next-title">{nextProject.data.title}</div>
         </a>
       </div>
@@ -75,153 +61,124 @@ const { title, year, icon, tags, description, badge, handtag } = project.data;
 
 <style>
   .brief-wrapper {
-    max-width: 850px;
-    margin: 5rem auto;
+    max-width: 780px;
+    margin: 3.5rem auto;
     padding: 0 2rem;
-    font-family: ui-sans-serif, system-ui, sans-serif;
   }
 
-  /* --- HEADER STYLING --- */
-  .brief-header { margin-bottom: 3rem; }
-  
+  .brief-header { margin-bottom: 2.5rem; }
+
   .brief-meta {
     display: flex;
-    gap: 2rem;
-    font-family: monospace;
-    font-size: 0.75rem;
-    color: #64748b;
-    margin-bottom: 2rem;
+    gap: 1rem;
     align-items: center;
+    font-size: 0.85rem;
+    color: #6B6B6B;
+    margin-bottom: 1.25rem;
   }
 
-  .label { font-weight: bold; margin-right: 0.5rem; color: #1B3D6E; }
-  
-  .status-badge { 
-    background: #1B3D6E; 
-    color: white; 
-    padding: 2px 8px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em;
+  .status-badge {
+    background: #1A1A1A;
+    color: white;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 500;
   }
 
-  .title-block { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
-  .project-icon { font-size: 2.5rem; }
-  
-  h1 { 
-    font-size: clamp(2.5rem, 5vw, 4rem); 
-    font-weight: 800; 
-    line-height: 0.9; 
-    margin: 0; 
-    color: #0f172a; 
-    letter-spacing: -0.03em;
+  .title-block { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem; }
+  .project-icon { font-size: 2rem; }
+
+  h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+    color: #1A1A1A;
+    letter-spacing: -0.02em;
   }
 
-  .hand-note { 
-    font-family: 'Comic Sans MS', cursive; 
-    color: #2563eb; 
-    font-size: 1.1rem;
-    transform: rotate(-1.5deg);
-    margin: 1rem 0 2rem 0;
-  }
-
-  .summary-text { 
-    font-size: 1.25rem; 
-    line-height: 1.6; 
-    color: #334155; 
-    margin-bottom: 2rem; 
-    max-width: 65ch; 
-  }
-
-  .tech-tag { 
-    font-family: monospace; 
-    font-size: 0.7rem; 
-    color: #1B3D6E; 
-    border: 1px solid #e2e8f0; 
-    padding: 4px 10px; 
-    margin-right: 0.5rem; 
-  }
-
-  /* --- DIVIDER --- */
-  .divider { display: flex; align-items: center; gap: 1rem; margin: 4rem 0; }
-  .line { flex-grow: 1; height: 1px; background: #cbd5e1; }
-  .divider-text { font-family: monospace; font-size: 0.65rem; color: #94a3b8; letter-spacing: 0.2em; }
-
-  /* --- TECHNICAL CONTENT STYLING (The Markdown) --- */
-  .brief-content { 
-    line-height: 1.8; 
-    font-size: 1.1rem; 
-    color: #1e293b; 
-  }
-
-  /* Subheaders */
-  .brief-content :global(h2) { 
-    font-family: monospace; 
-    font-size: 1.4rem; 
-    border-bottom: 2px solid #1B3D6E; 
-    padding-bottom: 0.5rem; 
-    margin-top: 4rem;
+  .summary-text {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #444;
     margin-bottom: 1.5rem;
-    color: #0f172a;
-    display: table; /* Shrinks border to text width */
+    max-width: 65ch;
+  }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tech-tag {
+    font-size: 0.75rem;
+    color: #2E5943;
+    background: rgba(46,89,67,0.08);
+    border-radius: 4px;
+    padding: 0.25em 0.65em;
+  }
+
+  /* Markdown content styling */
+  .brief-content {
+    line-height: 1.75;
+    font-size: 1.05rem;
+    color: #1e293b;
+  }
+
+  .brief-content :global(h2) {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 2.75rem;
+    margin-bottom: 1.1rem;
+    color: #1A1A1A;
   }
 
   .brief-content :global(h3) {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-top: 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
   }
 
-  /* Paragraphs & Lists */
-  .brief-content :global(p) { margin-bottom: 1.5rem; }
+  .brief-content :global(p) { margin-bottom: 1.35rem; }
 
   .brief-content :global(ul) {
     padding-left: 1.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
-  .brief-content :global(li) {
-    margin-bottom: 0.5rem;
-    list-style-type: "→ "; /* Technical arrow bullet */
-    color: #334155;
-  }
+  .brief-content :global(li) { margin-bottom: 0.4rem; }
 
-  /* Images in Content */
-  .brief-content :global(img) { 
-    width: 100%; 
-    border: 1px solid #e2e8f0; 
-    padding: 0.75rem;
-    background: #ffffff;
-    border-radius: 2px;
-    margin: 3rem 0; 
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-  }
-
-  /* Code Blocks (if you use them) */
-  .brief-content :global(pre) {
-    background: #0f172a;
-    padding: 1.5rem;
-    border-radius: 4px;
+  .brief-content :global(img) {
+    width: 100%;
+    border-radius: 8px;
     margin: 2rem 0;
+  }
+
+  .brief-content :global(pre) {
+    background: #1A1A1A;
+    color: #fff;
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
     overflow-x: auto;
   }
 
-  /* --- FOOTER / NAVIGATION --- */
+  /* Footer nav */
   .brief-footer {
-    margin-top: 8rem;
-    padding-top: 4rem;
-    border-top: 1px solid #e2e8f0;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid #E5E3DE;
   }
 
   .nav-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 
   .nav-btn {
     text-decoration: none;
-    padding: 1.5rem;
-    border: 1px solid #e2e8f0;
+    padding: 1.25rem;
+    border: 1px solid #E5E3DE;
+    border-radius: 8px;
     transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
@@ -229,49 +186,28 @@ const { title, year, icon, tags, description, badge, handtag } = project.data;
   }
 
   .nav-btn.secondary {
-    align-items: center;
-    background: #f8fafc;
-    color: #64748b;
-    font-family: monospace;
-    font-size: 0.8rem;
+    align-items: flex-start;
+    color: #6B6B6B;
+    font-size: 0.9rem;
   }
 
   .nav-btn.primary {
-    background: #ffffff;
-    border-color: #1B3D6E;
-    color: #1B3D6E;
+    background: #fff;
+    color: #1A1A1A;
     text-align: right;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .nav-btn.primary::after {
-    content: "";
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 4px;
-    background: #1B3D6E;
   }
 
   .next-label {
-    font-family: monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-    opacity: 0.7;
+    font-size: 0.78rem;
+    color: #6B6B6B;
+    margin-bottom: 0.35rem;
   }
 
-  .next-title { font-weight: 800; font-size: 1.2rem; }
+  .next-title { font-weight: 600; font-size: 1.05rem; }
 
   .nav-btn:hover {
-    border-color: #1B3D6E;
-    background: #f1f5f9;
-    transform: translateY(-2px);
-  }
-
-  .nav-btn.primary:hover {
-    background: #1B3D6E;
-    color: white;
+    border-color: #2E5943;
+    background: rgba(46,89,67,0.04);
   }
 
   @media (max-width: 600px) {

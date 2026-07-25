@@ -1,5 +1,4 @@
 ---
-// We removed the Astro Image import because images are now in /public
 const { 
   title, 
   year, 
@@ -16,8 +15,6 @@ const {
 
 <a href={`/work/${id}`} class="project-card-wrapper">
   <div class={`card ${featured ? 'featured' : ''}`}>
-    <div class="card-tape"></div>
-
     <div class="card-img-container">
       {coverImage ? (
         <img 
@@ -33,7 +30,6 @@ const {
       )}
       
       {badge && <span class="badge">{badge}</span>}
-      {handtag && <span class="card-handtag">{handtag}</span>}
     </div>
 
     <div class="card-body">
@@ -41,7 +37,7 @@ const {
         <span class="card-year">{year}</span>
         <div class="tag-list">
           {tags.slice(0, 3).map((tag: string) => (
-            <span class="card-tag">#{tag}</span>
+            <span class="card-tag">{tag}</span>
           ))}
         </div>
       </div>
@@ -50,8 +46,7 @@ const {
       <p class="card-desc">{description}</p>
 
       <div class="card-footer">
-        <span class="card-link">OPEN_BRIEF →</span>
-        <span class="card-id">REF_{id.substring(0, 8).toUpperCase()}</span>
+        <span class="card-link">View project →</span>
       </div>
     </div>
   </div>
@@ -62,57 +57,51 @@ const {
     text-decoration: none;
     color: inherit;
     display: block;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.2s ease;
   }
 
   .project-card-wrapper:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
   }
 
   .card {
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: #fff;
+    border: 1px solid #E5E3DE;
+    border-radius: 10px;
     position: relative;
     height: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .project-card-wrapper:hover .card {
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.15);
+    border-color: #d8d5cd;
   }
 
   .card.featured {
-    border-top: 4px solid #f97316;
-  }
-
-  .card-tape {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 25px;
-    background: rgba(27, 61, 110, 0.1);
-    backdrop-filter: blur(2px);
-    z-index: 10;
+    border-color: #2E5943;
   }
 
   .card-img-container {
     position: relative;
     width: 100%;
-    height: 200px;
-    background: #f1f5f9;
+    height: 190px;
+    background: #F3F2EE;
     overflow: hidden;
-    border-bottom: 1px solid #e2e8f0;
   }
 
   .main-photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: scale 0.5s ease;
+    transition: transform 0.4s ease;
   }
 
   .project-card-wrapper:hover .main-photo {
-    scale: 1.05;
+    transform: scale(1.03);
   }
 
   .photo-placeholder {
@@ -120,14 +109,12 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 10px, #f1f5f9 10px, #f1f5f9 20px);
   }
 
-  .placeholder-icon { font-size: 3rem; opacity: 0.3; }
+  .placeholder-icon { font-size: 2.5rem; opacity: 0.35; }
 
-  /* Content Spacing */
   .card-body {
-    padding: 1.5rem; 
+    padding: 1.35rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -137,34 +124,40 @@ const {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.7rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 
   .card-year {
-    font-family: monospace;
     font-size: 0.75rem;
-    font-weight: bold;
-    color: #1B3D6E;
-    background: rgba(27, 61, 110, 0.05);
-    padding: 2px 6px;
+    font-weight: 500;
+    color: #6B6B6B;
   }
 
-  .tag-list { display: flex; gap: 0.5rem; }
-  .card-tag { font-family: monospace; font-size: 0.65rem; color: #64748b; }
+  .tag-list { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .card-tag {
+    font-size: 0.68rem;
+    color: #2E5943;
+    background: rgba(46,89,67,0.08);
+    padding: 0.15em 0.55em;
+    border-radius: 4px;
+  }
 
   .card-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    margin: 0 0 0.75rem 0;
-    line-height: 1.2;
-    color: #0f172a;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.25;
+    color: #1A1A1A;
+    letter-spacing: -0.01em;
   }
 
   .card-desc {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: #475569;
-    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #6B6B6B;
+    margin-bottom: 1.25rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -173,49 +166,26 @@ const {
 
   .card-footer {
     margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px dashed #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding-top: 0.9rem;
+    border-top: 1px solid #EFEDE8;
   }
 
   .card-link {
-    font-family: monospace;
-    font-size: 0.75rem;
-    font-weight: bold;
-    color: #1B3D6E;
-  }
-
-  .card-id {
-    font-family: monospace;
-    font-size: 0.65rem;
-    color: #cbd5e1;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #2E5943;
   }
 
   .badge {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: #1B3D6E;
-    color: white;
-    padding: 2px 8px;
-    font-family: monospace;
-    font-size: 0.7rem;
-    font-weight: bold;
+    top: 0.75rem;
+    right: 0.75rem;
     z-index: 5;
-  }
-
-  .card-handtag {
-    position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    background: #fef08a;
-    color: #854d0e;
-    padding: 2px 8px;
-    font-family: 'Comic Sans MS', cursive;
-    font-size: 0.7rem;
-    transform: rotate(-2deg);
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    background: #1A1A1A;
+    color: #fff;
+    padding: 0.2em 0.6em;
+    font-size: 0.68rem;
+    font-weight: 500;
+    border-radius: 4px;
   }
 </style>
