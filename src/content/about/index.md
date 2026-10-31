@@ -1,4 +1,5 @@
 ---
+photo: /images/site/IMG_6379.jpg
 title: About
 subtitle: Ben Tagami
 description: ''
