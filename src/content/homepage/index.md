@@ -12,7 +12,7 @@ specs:
   - label: Speciality
     value: Prototyping
   - label: Location
-    value: San Francisco
+    value: Berkeley
   - label: Background
     value: Maker / Builder
 ---
