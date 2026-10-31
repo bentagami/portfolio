@@ -6,6 +6,7 @@ const aboutEntry = await getEntry('about', 'index');
 if (!aboutEntry) return Astro.redirect('/404');
 
 const { Content } = await render(aboutEntry);
+const photo = aboutEntry.data.photo;
 ---
 
 <Layout title="About">
@@ -19,11 +20,30 @@ const { Content } = await render(aboutEntry);
           <Content />
         </div>
       </div>
+
+      {photo && (
+        <div class="about-photo">
+          <img src={photo} alt={aboutEntry.data.subtitle || 'Photo'} />
+        </div>
+      )}
     </div>
   </section>
 </Layout>
 
 <style>
+  .about-hero .hero-grid { align-items: start; }
+  .about-hero .hero-grid:has(.about-photo) { grid-template-columns: 1fr 300px; }
+  .about-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #E5E3DE;
+  }
+  @media (max-width: 640px) {
+    .about-hero .hero-grid:has(.about-photo) { grid-template-columns: 1fr; }
+    .about-photo { order: -1; max-width: 240px; }
+  }
   .about-content {
     margin-top: 2rem;
     line-height: 1.6;

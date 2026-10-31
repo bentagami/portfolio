@@ -43,6 +43,7 @@ const about = defineCollection({
     title: z.string().default("About"),
     subtitle: z.string().optional(),
     description: z.string().optional(),
+    photo: z.string().optional(),
   }),
 });
 
