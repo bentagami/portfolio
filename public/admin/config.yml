@@ -18,7 +18,10 @@ collections:
       - name: "homepage"
         label: "Homepage Content"
         file: "src/content/homepage/index.md"
+        media_folder: "/public/images/site"
+        public_folder: "/images/site"
         fields:
+          - { label: "Your Photo", name: "photo", widget: "image", required: false }
           - { label: "Mission ID", name: "mission_id", widget: "string", default: "MISSION: BT-001" }
           - { label: "Main Headline", name: "headline", widget: "string", default: "HI, I'M BEN." }
           - { label: "Highlighted Word", name: "highlight", widget: "string", default: "MAKE", hint: "The word with the yellow marker effect" }

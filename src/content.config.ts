@@ -29,6 +29,7 @@ const homepage = defineCollection({
     subheadline: z.string().optional(),
     tagline: z.string().optional(),
     sticky_note: z.string().optional(),
+    photo: z.string().optional(),
     specs: z.array(z.object({
       label: z.string(),
       value: z.string()

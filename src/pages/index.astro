@@ -56,9 +56,13 @@ const parts = headline.includes(highlight)
 
       <div class="photo-col">
         <div class="photo-slot">
-          <div class="photo-placeholder">
-            <span class="icon">🧑‍💻</span>
-          </div>
+          {home.photo ? (
+            <img src={home.photo} alt="Ben Tagami" class="photo-img" />
+          ) : (
+            <div class="photo-placeholder">
+              <span class="icon">🧑‍💻</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
