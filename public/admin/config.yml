@@ -81,4 +81,15 @@ collections:
       - { label: "Badge Text", name: "badge", widget: "string", required: false, hint: "e.g. NEW" }
       - { label: "Featured (Orange Top)", name: "featured", widget: "boolean", default: false }
       - { label: "Tech Stack Tags", name: "tags", widget: "list" }
+      - label: "Videos"
+        name: "videos"
+        widget: "list"
+        required: false
+        summary: "{{fields.caption}} {{fields.url}}"
+        hint: "Shown below the post text. Use a YouTube/Vimeo link for anything large, or upload a short MP4/WebM (max 25 MB)."
+        fields:
+          - { label: "Caption", name: "caption", widget: "string", required: false }
+          - { label: "YouTube or Vimeo Link", name: "url", widget: "string", required: false, hint: "Paste the normal watch link. Leave blank if uploading a file." }
+          - { label: "Or Upload Video File", name: "file", widget: "file", required: false, media_folder: "/public/videos", public_folder: "/videos", accept: ["video/mp4", "video/webm"], hint: "MP4 or WebM, under 25 MB (Cloudflare Pages file limit)." }
+          - { label: "Thumbnail (optional, for uploaded files)", name: "poster", widget: "image", required: false }
       - { label: "Body Content", name: "body", widget: "markdown" }

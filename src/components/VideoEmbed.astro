@@ -1,0 +1,65 @@
+---
+const { file, url, poster, caption } = Astro.props;
+
+function embedUrl(u?: string): string | null {
+  if (!u) return null;
+  try {
+    const parsed = new URL(u.trim());
+    const host = parsed.hostname.replace(/^www\./, '');
+    if (host === 'youtu.be') {
+      return `https://www.youtube-nocookie.com/embed/${parsed.pathname.slice(1)}`;
+    }
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      if (parsed.pathname === '/watch') {
+        const v = parsed.searchParams.get('v');
+        return v ? `https://www.youtube-nocookie.com/embed/${v}` : null;
+      }
+      const m = parsed.pathname.match(/^\/(shorts|embed|live)\/([\w-]+)/);
+      return m ? `https://www.youtube-nocookie.com/embed/${m[2]}` : null;
+    }
+    if (host === 'vimeo.com') {
+      const m = parsed.pathname.match(/\/(\d+)/);
+      return m ? `https://player.vimeo.com/video/${m[1]}` : null;
+    }
+    if (host === 'player.vimeo.com') return parsed.toString();
+  } catch {}
+  return null;
+}
+
+const embed = embedUrl(url);
+---
+
+{(file || embed) && (
+  <figure class="video-figure">
+    {file ? (
+      <video controls preload="metadata" playsinline poster={poster || undefined}>
+        <source src={file} />
+        Your browser doesn't support embedded video. <a href={file}>Download it instead</a>.
+      </video>
+    ) : (
+      <div class="video-frame">
+        <iframe
+          src={embed!}
+          title={caption || 'Project video'}
+          loading="lazy"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowfullscreen
+        ></iframe>
+      </div>
+    )}
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}
+
+<style>
+  .video-figure { margin: 2rem 0; }
+  video, .video-frame {
+    width: 100%;
+    border-radius: 8px;
+    background: #000;
+    display: block;
+  }
+  .video-frame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  figcaption { font-size: 0.85rem; color: #6B6B6B; margin-top: 0.6rem; }
+</style>

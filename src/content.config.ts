@@ -16,7 +16,13 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     tags: z.array(z.string()),
     // Now 'image' is defined and can be used here:
-    coverImage: z.string().optional()
+    coverImage: z.string().optional(),
+    videos: z.array(z.object({
+      caption: z.string().optional(),
+      file: z.string().optional(),
+      url: z.string().optional(),
+      poster: z.string().optional(),
+    })).default([]),
   }),
 });
 

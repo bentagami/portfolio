@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import VideoEmbed from '../../components/VideoEmbed.astro';
 
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
 
 const { project, nextProject } = Astro.props;
 const { Content } = await render(project);
-const { title, year, icon, tags, description, badge } = project.data;
+const { title, year, icon, tags, description, badge, videos } = project.data;
 ---
 
 <Layout title={`${title} | Project`}>
@@ -42,6 +43,7 @@ const { title, year, icon, tags, description, badge } = project.data;
 
     <main class="brief-content">
       <Content />
+      {videos.map((v) => <VideoEmbed {...v} />)}
     </main>
 
     <footer class="brief-footer">
