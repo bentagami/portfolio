@@ -7,7 +7,7 @@ id: BT-SW-02
 icon: 👨‍🚀
 handtag: ''
 badge: ''
-featured: true
+featured: false
 tags:
   - C++, 3D Printing, Woodworking
 ---
