@@ -7,7 +7,7 @@ id: BT-HW-02
 icon: 🔨
 handtag: ''
 badge: ''
-featured: false
+featured: true
 tags:
   - Laser Cutter, Woodworking, Electronics
 ---
