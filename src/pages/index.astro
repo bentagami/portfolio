@@ -8,7 +8,11 @@ const homeEntry = await getEntry('homepage', 'index');
 
 // 2. Fetch and Sort Projects
 const allProjects = await getCollection('projects');
-const projects = allProjects.sort((a, b) => b.data.year - a.data.year);
+const sortedProjects = allProjects.sort((a, b) => b.data.year - a.data.year);
+// Homepage shows highlights: projects marked "featured" in the CMS.
+// If none are marked yet, fall back to the 6 most recent.
+const featuredProjects = sortedProjects.filter((p) => p.data.featured);
+const projects = featuredProjects.length > 0 ? featuredProjects : sortedProjects.slice(0, 6);
 
 // 3. Extract Data with defaults if the file is missing
 const home = homeEntry?.data || {
@@ -71,7 +75,7 @@ const parts = headline.includes(highlight)
   <div class="section-header">
     <div class="section-header-inner">
       <span class="section-title">Selected Work</span>
-      <span class="section-count">{projects.length} projects</span>
+      <a href="/work" class="section-count view-all">View all {sortedProjects.length} projects →</a>
     </div>
   </div>
 
@@ -88,11 +92,17 @@ const parts = headline.includes(highlight)
           id={project.id}
           badge={project.data.badge}
           handtag={project.data.handtag}
-          featured={project.data.featured}
+          featured={false}
         />
       ))
     ) : (
       <div class="no-projects">No projects found in src/content/projects/</div>
     )}
   </div>
+
+  {sortedProjects.length > projects.length && (
+    <div class="view-all-row">
+      <a href="/work" class="view-all-btn">See all work →</a>
+    </div>
+  )}
 </Layout>

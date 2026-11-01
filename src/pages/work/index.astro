@@ -1,0 +1,43 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<Layout title="All Work">
+  <section class="hero all-work-hero">
+    <h1>All work</h1>
+    <p class="tagline">Everything I've built, newest first.</p>
+  </section>
+
+  <div class="section-header">
+    <div class="section-header-inner">
+      <span class="section-title">Projects</span>
+      <span class="section-count">{projects.length} total</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    {projects.map((project) => (
+      <ProjectCard
+        title={project.data.title}
+        year={project.data.year}
+        tags={project.data.tags}
+        description={project.data.description}
+        coverImage={project.data.coverImage}
+        icon={project.data.icon}
+        id={project.id}
+        badge={project.data.badge}
+        handtag={project.data.handtag}
+        featured={project.data.featured}
+      />
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .all-work-hero { padding-bottom: 0; }
+  .all-work-hero .tagline { margin-bottom: 0; }
+</style>

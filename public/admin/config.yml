@@ -79,7 +79,7 @@ collections:
       - { label: "Icon (Emoji)", name: "icon", widget: "string", hint: "e.g. ⚙️ or 🚀" }
       - { label: "Sticky Note Text", name: "handtag", widget: "string", required: false }
       - { label: "Badge Text", name: "badge", widget: "string", required: false, hint: "e.g. NEW" }
-      - { label: "Featured (Orange Top)", name: "featured", widget: "boolean", default: false }
+      - { label: "Show on Homepage (Highlight)", name: "featured", widget: "boolean", default: false, hint: "On = appears in Selected Work on the front page. All projects always appear on the All Work page." }
       - { label: "Tech Stack Tags", name: "tags", widget: "list" }
       - label: "Videos"
         name: "videos"
