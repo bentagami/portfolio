@@ -7,9 +7,10 @@ id: BT-SW-01
 icon: 🌎
 handtag: ''
 badge: ''
-featured: true
+featured: false
 tags:
   - Mediapipe, Optics, Javascript, 3D Printing
+videos: []
 ---
 
 We happened to already have a MagicPlanet lying around so I thought to use modern computer vision to add more to the experience. ![](/images/projects/IMG_20260424_110959.jpg)
