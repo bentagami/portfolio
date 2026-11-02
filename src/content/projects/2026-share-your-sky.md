@@ -13,6 +13,7 @@ tags:
   - Woodworking
   - Ubuntu Server
   - Raspberry Pi
+videos: []
 ---
 
 Share Your Sky is an exhibit that is part of the greater Shared Skies exhibition at Chabot Space & Science Center. Shared Skies is an exhibit whose main goal is to highlight the art & science of astrophotography. The exhibits main highlight is astrophotographers that were selected as winners as part of the AstroPrize competition. Share Your Sky is intended to be supplemental to this main content by providing an interactive, immersive experience that gives a broad overview of how astrophotography editing works as well as make people feel like they are part of a global astrophotography community.
@@ -37,12 +38,17 @@ A mini-PC with Ubuntu is set up to run this javascript based website locally, bu
 
 The PC is also hardwired into a camera that lives in the telescope housing. I went through a couple different iterations of cameras, action cameras, and DSLRs but eventually ended up getting an exposed PCB, USB-compatible camera because our requirements of 4K, HDR, Wide FOV were surprisingly hard to come across. We routed out the wood subfloor underneath the turf grass to keep the camera hardwired and also prevent visitors from breaking the connection overtime.
 
-
 **Set Dressing**
 
 ![A photo with a telescope looking at a digital backgrop of Yosemite National Park, framed in by redwood trees](/images/projects/IMG_20261014_095942.jpg)
 
-When moving out of the prototyping phase, we were considering on what kind of backdrop we could provide to make the photo taking experience interesting and engaging. At one point I suggested turf grass half-jokingly, but we all started to like the idea. We wanted the visitor to feel like they could step in and join in on a night out in the woods and take photos of the stars. Our team built on top of the grass idea, thinking about cutouts to create a classic photo-op that could frame in astrophotography content, so visitors had the options of taking a photo of themselves, their friends or of just the content itself - each providing a slightly different experience and each providing content to edit in the main interaction. After a teammate suggested re-using an old telescope it felt like we had made enough physical layers to achieve an acceptable level of immersion. All that was added after installing the CNC cut backdrop, the turf grass and the telescope were two brown Adirondack style chairs. To add the final touch, we had an audio track that was used for an old planetarium show that had crickets, owls, wolves and a single UFO noise to make it feel like you were entering a campsite at night. 
+When moving out of the prototyping phase, we were considering on what kind of backdrop we could provide to make the photo taking experience interesting and engaging. At one point I suggested turf grass half-jokingly, but we all started to like the idea. We wanted the visitor to feel like they could step in and join in on a night out in the woods and take photos of the stars. Our team built on top of the grass idea, thinking about cutouts to create a classic photo-op that could frame in astrophotography content, so visitors had the options of taking a photo of themselves, their friends or of just the content itself - each providing a slightly different experience and each providing content to edit in the main interaction. After a teammate suggested re-using an old telescope it felt like we had made enough physical layers to achieve an acceptable level of immersion. 
+
+![](/images/projects/IMG_20261014_095908.jpg)
+
+To harden the telescope, I made a custom mount using plywood I cut on our Shaper Origin and then joined together using a tenon that was capped with dowels. We then hard mounted the custom telescope mount into the concrete floor below.
+
+All that was added after installing the CNC cut backdrop, the turf grass and the telescope were two brown Adirondack style chairs. To add the final touch, we had an audio track that was used for an old planetarium show that had crickets, owls, wolves and a single UFO noise to make it feel like you were entering a campsite at night. 
 
 **Community Gallery**
 
