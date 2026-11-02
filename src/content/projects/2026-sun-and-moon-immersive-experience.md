@@ -7,7 +7,7 @@ id: BT-Chabot-02
 icon: 🌕
 handtag: ''
 badge: ''
-featured: false
+featured: true
 tags:
   - Unreal Engine
   - TouchDesigner
