@@ -18,6 +18,10 @@ videos: []
 
 Share Your Sky is an exhibit that is part of the greater Shared Skies exhibition at Chabot Space & Science Center. Shared Skies is an exhibit whose main goal is to highlight the art & science of astrophotography. The exhibits main highlight is astrophotographers that were selected as winners as part of the AstroPrize competition. Share Your Sky is intended to be supplemental to this main content by providing an interactive, immersive experience that gives a broad overview of how astrophotography editing works as well as make people feel like they are part of a global astrophotography community.
 
+I helped our team find our flow and layout of the entire experience by creating a foamcore model that we referenced as we went through the process of finding out where "Share Your Sky" was going to live and how it related to the other sections of the exhibition.
+
+![](/images/projects/IMG_20260630_155844.jpg)
+
 Share Your Sky is made up of 3 main parts; the main digital interactive, the set dressing, and the community gallery. 
 
 **Experience**
