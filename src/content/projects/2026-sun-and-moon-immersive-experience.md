@@ -1,6 +1,6 @@
 ---
 title: Sun and Moon Immersive Experience
-coverImage: ''
+coverImage: /images/projects/IMG_20260728_125946.jpg
 description: A digital immersive experience of the Sun and Moon, utilizing content from NASA SVS and my own Unreal Engine game.
 year: 2026
 id: BT-Chabot-02
@@ -30,6 +30,8 @@ The exhibit utilizes an interesting curved glass wall that was already an existi
 Using two projectors, we display content created by the team at NASA's SVS (Scientific Visualization Studio) across the glass wall, which we covered with a projection fabric.
 
 For the moon, we wanted to replicate the curved feature we had with the sun, and we had kind of a weird space to work in. This part of the building was initially part of the lobby, so things like columns easily got in the way. After some demolition work, I created CNC files for curved pieces of plywood that we could then put ribs in between and bendy plywood on top of. A total of 9 walls, so 18 pieces were made that continue the complex curve. 
+
+![](/images/projects/IMG_20260707_110616.jpg)
 
 ![Wall in progress, with spackle](/images/projects/IMG_20260729_091439.jpg)
 
