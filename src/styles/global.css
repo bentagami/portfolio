@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,450;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --paper: #E4DDCE;
   --ink: #1A1A1A;
-  --muted: #5C574D;
+  --muted: #3B372F;
   --line: rgba(60, 50, 30, 0.22);
   --accent: #2E5943;
+  --accent-text: #1E4130; /* darker green for small text */
   --accent-soft: rgba(46, 89, 67, 0.08);
   --max: 1100px;
 }
@@ -73,13 +74,13 @@ h1 {
 .name-line { display: none; }
 
 .hero-sub {
-  font-size: 0.95rem; color: var(--accent);
-  font-weight: 500; margin-bottom: 1rem;
+  font-size: 1rem; color: var(--accent-text);
+  font-weight: 600; margin-bottom: 1rem;
 }
 .hero-sub::before { content: ''; }
 
 .tagline {
-  font-size: 1.05rem; color: var(--muted); line-height: 1.7;
+  font-size: 1.1rem; color: var(--muted); line-height: 1.7; font-weight: 450;
   max-width: 52ch; margin-bottom: 1.75rem;
 }
 
@@ -89,7 +90,7 @@ h1 {
 }
 .specs::before { content: none; }
 .spec-row { display: flex; align-items: baseline; gap: 0.4rem; }
-.spec-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.spec-label { font-size: 0.75rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
 .spec-val { font-size: 0.85rem; color: var(--ink); font-weight: 500; }
 
 .photo-col { position: relative; }
@@ -121,7 +122,7 @@ h1 {
   font-size: 1.05rem; font-weight: 600; color: var(--ink);
 }
 .section-count {
-  font-size: 0.78rem; color: var(--muted); margin-left: auto;
+  font-size: 0.82rem; font-weight: 500; color: var(--muted); margin-left: auto;
 }
 
 /* GRID */
@@ -171,6 +172,6 @@ footer {
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: -1;
-  background: url('https://images.unsplash.com/photo-1616410731303-6affae095a0a?fm=jpg&q=60&w=2000&auto=format&ixlib=rb-4.1.0') center / cover no-repeat;
+  background: linear-gradient(rgba(246, 241, 230, 0.42), rgba(246, 241, 230, 0.42)), url('https://images.unsplash.com/photo-1616410731303-6affae095a0a?fm=jpg&q=60&w=2000&auto=format&ixlib=rb-4.1.0') center / cover no-repeat;
   pointer-events: none;
 }

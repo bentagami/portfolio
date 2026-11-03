@@ -82,7 +82,7 @@ const {
   }
 
   .card.featured {
-    border-color: #2E5943;
+    border-color: var(--accent-text);
   }
 
   .card-img-container {
@@ -130,15 +130,16 @@ const {
   }
 
   .card-year {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    color: #6B6B6B;
+    color: var(--muted);
   }
 
   .tag-list { display: flex; gap: 0.4rem; flex-wrap: wrap; }
   .card-tag {
-    font-size: 0.68rem;
-    color: #2E5943;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--accent-text);
     background: rgba(46,89,67,0.08);
     padding: 0.15em 0.55em;
     border-radius: 4px;
@@ -154,9 +155,10 @@ const {
   }
 
   .card-desc {
-    font-size: 0.88rem;
+    font-size: 0.93rem;
     line-height: 1.55;
-    color: #6B6B6B;
+    font-weight: 450;
+    color: var(--muted);
     margin-bottom: 1.25rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -171,9 +173,9 @@ const {
   }
 
   .card-link {
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: #2E5943;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--accent-text);
   }
 
   .badge {

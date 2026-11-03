@@ -75,7 +75,7 @@ const { title, year, icon, tags, description, badge, videos } = project.data;
     gap: 1rem;
     align-items: center;
     font-size: 0.85rem;
-    color: #6B6B6B;
+    color: var(--muted);
     margin-bottom: 1.25rem;
   }
 
@@ -103,7 +103,7 @@ const { title, year, icon, tags, description, badge, videos } = project.data;
   .summary-text {
     font-size: 1.15rem;
     line-height: 1.65;
-    color: #444;
+    color: var(--muted);
     margin-bottom: 1.5rem;
     max-width: 65ch;
   }
@@ -111,7 +111,7 @@ const { title, year, icon, tags, description, badge, videos } = project.data;
   .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tech-tag {
     font-size: 0.75rem;
-    color: #2E5943;
+    color: var(--accent-text);
     background: rgba(46,89,67,0.08);
     border-radius: 4px;
     padding: 0.25em 0.65em;
@@ -121,7 +121,7 @@ const { title, year, icon, tags, description, badge, videos } = project.data;
   .brief-content {
     line-height: 1.75;
     font-size: 1.05rem;
-    color: #1e293b;
+    color: var(--ink);
   }
 
   .brief-content :global(h2) {
@@ -189,7 +189,7 @@ const { title, year, icon, tags, description, badge, videos } = project.data;
 
   .nav-btn.secondary {
     align-items: flex-start;
-    color: #6B6B6B;
+    color: var(--muted);
     font-size: 0.9rem;
   }
 
@@ -201,14 +201,14 @@ const { title, year, icon, tags, description, badge, videos } = project.data;
 
   .next-label {
     font-size: 0.78rem;
-    color: #6B6B6B;
+    color: var(--muted);
     margin-bottom: 0.35rem;
   }
 
   .next-title { font-weight: 600; font-size: 1.05rem; }
 
   .nav-btn:hover {
-    border-color: #2E5943;
+    border-color: var(--accent-text);
     background: rgba(46,89,67,0.04);
   }
 
