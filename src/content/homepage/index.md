@@ -4,7 +4,7 @@ mission_id: 'MISSION: BT-001'
 headline: HI, I'M BEN. I MAKE THINGS.
 highlight: MAKE
 subheadline: Engineer — Maker — Exhibit Developer
-tagline: I have a background in Materials Science & Mechanical Engineering. I have worked in the Semiconductor and Additive Manufacturing industries. I am currently designing exhibits and teaching engineering skills at Chabot Space & Science Center.
+tagline: Engineer by training, tinkerer by temperament. After working in semiconductors and additive manufacturing, I am now at Chabot Space & Science Center, designing exhibits, teaching engineering, and prototyping with cardboard, europly, 3d printing and whatever else gets an idea off the page.
 sticky_note: ✏️ add photo
 specs:
   - label: Title
