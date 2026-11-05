@@ -21,6 +21,10 @@ videos:
 
 This exhibit was created with the idea that it should be a platform to host potential artists-in-residence or show off community created content. However, we wanted to fill the space with some kind of content before hand as well as general infrastructure and layout. 
 
+![Sketch of the space](/images/projects/IMG_20261103_170801.jpg)
+
+An early concept sketch on how the space could be activated.
+
 We settled on a digital-first approach as that would have the least overhead in changing out content - we wouldn't need a new build each time the content got changed. 
 
 The exhibit utilizes an interesting curved glass wall that was already an existing part of the architecture:
