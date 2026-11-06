@@ -56,7 +56,7 @@ nav ul li a:hover { color: var(--ink); }
   padding: 4.5rem 2rem 3rem;
 }
 .hero-grid {
-  display: grid; grid-template-columns: 1fr 160px; gap: 3rem; align-items: center;
+  display: grid; grid-template-columns: 1fr 260px; gap: 3rem; align-items: center;
 }
 
 .sticky { display: none; } /* legacy sticky-note field, no longer shown */
@@ -96,10 +96,14 @@ h1 {
 .photo-col { position: relative; }
 .photo-tape { display: none; }
 .photo-slot {
-  width: 150px; height: 150px;
-  border-radius: 50%;
-  overflow: hidden; position: relative;
-  background: var(--accent-soft);
+  width: 100%; max-width: 260px;
+  position: relative;
+  transform: rotate(3deg); /* "plopped on the page" */
+}
+/* No photo uploaded yet: keep the simple circle placeholder */
+.photo-slot:has(.photo-placeholder) {
+  width: 150px; height: 150px; border-radius: 50%;
+  overflow: hidden; background: var(--accent-soft); transform: none;
 }
 .photo-slot::after { content: none; }
 .photo-placeholder {
@@ -152,10 +156,16 @@ footer {
 @media (max-width: 640px) {
   .hero-grid { grid-template-columns: 1fr; }
   .photo-col { order: -1; }
-  .photo-slot { width: 100px; height: 100px; }
+  .photo-slot { max-width: 200px; }
+  .photo-slot:has(.photo-placeholder) { width: 100px; height: 100px; }
 }
 
-.photo-img { width: 100%; height: 100%; object-fit: cover; }
+.photo-img {
+  width: 100%; height: auto; display: block;
+  /* drop-shadow follows the PNG's transparent edge, like a paper cutout */
+  filter: drop-shadow(0 1px 1px rgba(40, 30, 10, 0.25))
+          drop-shadow(0 8px 12px rgba(40, 30, 10, 0.28));
+}
 
 .view-all { color: var(--accent); text-decoration: none; font-weight: 500; }
 .view-all:hover { text-decoration: underline; }
