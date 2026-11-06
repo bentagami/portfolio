@@ -1,4 +1,4 @@
 ---
-title: "All work"
-intro: "Everything I've built, newest first."
+title: All work
+intro: A collection of my work.
 ---
