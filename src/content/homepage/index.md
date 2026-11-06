@@ -1,5 +1,5 @@
 ---
-photo: /images/site/profile-cropped.jpg
+photo: /images/site/ProfilePhoto-Crop.png
 mission_id: 'MISSION: BT-001'
 headline: HI, I'M BEN. I MAKE THINGS.
 highlight: MAKE
