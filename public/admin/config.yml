@@ -47,6 +47,13 @@ collections:
           - { label: "Meta Description", name: "description", widget: "text", required: false }
           - { label: "Body", name: "body", widget: "markdown" }
 
+      - name: "workpage"
+        label: "All Work Page"
+        file: "src/content/workpage/index.md"
+        fields:
+          - { label: "Page Heading", name: "title", widget: "string", default: "All work" }
+          - { label: "Intro Line", name: "intro", widget: "text", required: false, hint: "Short line shown under the heading. Leave blank to hide it." }
+
       - name: "contact"
         label: "Contact Page"
         file: "src/content/contact/index.md"

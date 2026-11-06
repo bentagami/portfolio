@@ -66,4 +66,12 @@ const contact = defineCollection({
   }),
 });
 
-export const collections = { projects, homepage, about, contact };
+const workpage = defineCollection({
+  loader: glob({ pattern: "index.md", base: "./src/content/workpage" }),
+  schema: z.object({
+    title: z.string().default("All work"),
+    intro: z.string().optional(),
+  }),
+});
+
+export const collections = { projects, homepage, about, contact, workpage };

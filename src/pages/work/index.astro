@@ -1,15 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+const page = await getEntry('workpage', 'index');
+const heading = page?.data.title ?? 'All work';
+const intro = page?.data.intro;
 ---
 
 <Layout title="All Work">
   <section class="hero all-work-hero">
-    <h1>All work</h1>
-    <p class="tagline">Everything I've built, newest first.</p>
+    <h1>{heading}</h1>
+    {intro && <p class="tagline">{intro}</p>}
   </section>
 
   <div class="section-header">
